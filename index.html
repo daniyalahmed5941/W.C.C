@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Currency Converter</title>
-    <link rel="icon" type="image/jpeg" href="logo image.jpg">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+    <link rel="icon" type="image/jpg" href="logo image.jpg">
+
+    <style> 
         /* CSS Reset & Base Styles */
         * {
             margin: 0;
@@ -464,24 +465,27 @@
     </div>
 
     <!-- LOGOUT PAGE VIEW -->
-     <div id="logout-view" class="page-view">
-    <div class="auth-bg">
-        <div class="auth-card">
-            <h2>Account Login</h2>
-            <p style="text-align:center; margin-bottom:15px;" id="logout-user-msg">Enter your details</p>
-            <form onsubmit="handleLogout(event)">
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="logout-username" required>
-                </div>
-                <div class="input-group">
-                    <!-- password ya baaki inputs -->
-                </div>
-            </form>
+    <div id="logout-view" class="page-view">
+        <div class="auth-bg">
+            <div class="auth-card">
+                <h2>Account Logout</h2>
+                <p style="text-align:center; margin-bottom:15px;" id="logout-user-msg">
+                    Welcome <span id="display-logout-user" style="color:#ef4444; font-weight:bold;"></span>, enter your details to confirm logout.
+                </p>
+                <form onsubmit="handleLogout(event)">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="logout-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="logout-password" required>
+                    </div>
+                    <button type="submit" class="btn-convert" style="background:#ef4444;">Logout</button>
+                </form>
+            </div>
         </div>
     </div>
-     </div>
-    
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
@@ -587,9 +591,20 @@
         }
 
         function showAuthPage(type) {
-            if (type === 'login') showView('login-view');
-            else if (type === 'signup') showView('signup-view');
-            else if (type === 'logout') showView('logout-view');
+            if (type === 'login') {
+                showView('login-view');
+            } else if (type === 'signup') {
+                showView('signup-view');
+            } else if (type === 'logout') {
+                // Logout page par username display hoga
+                const displayUser = document.getElementById('display-logout-user');
+                if (currentUser && currentUser.username) {
+                    displayUser.textContent = currentUser.username;
+                } else {
+                    displayUser.textContent = "";
+                }
+                showView('logout-view');
+            }
         }
 
         // User Management System Logic
@@ -598,7 +613,8 @@
         function checkAuthStatus() {
             const authNavItem = document.getElementById('auth-nav-item');
             if (currentUser) {
-                authNavItem.innerHTML = `<a class="btn-auth" style="background:#ef4444;" onclick="showAuthPage('logout')">Logout (${currentUser.username})</a>`;
+                // Home/Navbar tab me STRICTLY sirf 'Logout' aayega
+                authNavItem.innerHTML = `<a class="btn-auth" style="background:#ef4444; color:#ffffff !important;" onclick="showAuthPage('logout')">Logout</a>`;
             } else {
                 authNavItem.innerHTML = `<a class="btn-auth" onclick="showAuthPage('login')">Login</a>`;
             }
