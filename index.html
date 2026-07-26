@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Currency Converter</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Background Layers */
+        .page-bg {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+            color: #fff;
+            padding-top: 90px;
+            padding-bottom: 50px;
+        }
+
+        .auth-bg {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Auto Hiding Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transform: translateY(0);
+        }
+
+        header.nav-hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #f8fafc;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+        .btn-auth {
+            background: #38bdf8;
+            color: #0f172a !important;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+        }
+
+        .btn-auth:hover {
+            background: #0284c7;
+            color: #fff !important;
+        }
+
+        /* Hero Welcome Section */
+        .hero-banner {
+            text-align: center;
+            padding: 40px 20px 30px;
+            margin-bottom: 20px;
+        }
+
+        .hero-banner h1 {
+            font-size: 42px;
+            color: #38bdf8;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-banner p {
+            font-size: 20px;
+            color: #e2e8f0;
+            font-weight: 300;
+        }
+
+        /* App Main Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Converter UI */
+        .converter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .input-group input, .select-box select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .select-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0 10px;
+            background: #fff;
+        }
+
+        .select-box img {
+            width: 30px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 2px;
+            margin-right: 10px;
+        }
+
+        .select-box select {
+            border: none;
+            background: transparent;
+        }
+
+        .btn-convert {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-convert:hover {
+            background: #0284c7;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #15803d;
+            display: none;
+        }
+
+        /* Contact & About Sections */
+        .info-detail {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .info-detail i {
+            color: #0ea5e9;
+            margin-right: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            height: 100px;
+            resize: none;
+        }
+
+        /* Auth Cards */
+        .auth-card {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: #333;
+        }
+
+        .auth-card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+
+        .auth-card .input-group {
+            margin-bottom: 15px;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .auth-toggle a {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 4%;
+            }
+            .logo span {
+                display: none;
+            }
+            nav ul {
+                gap: 10px;
+            }
+            nav a {
+                font-size: 13px;
+            }
+            .hero-banner h1 {
+                font-size: 30px;
+            }
+            .hero-banner p {
+                font-size: 16px;
+            }
+        }
+
+        /* View Control */
+        .page-view {
+            display: none;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header id="main-header">
+        <div class="logo">
+            <i class="fa-solid fa-coins"></i>
+            <span>World Currency Converter</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a onclick="scrollToSection('hero-sec')">Home</a></li>
+                <li><a onclick="scrollToSection('contact-sec')">Contact Us</a></li>
+                <li><a onclick="scrollToSection('about-sec')">About Us</a></li>
+                <li id="auth-nav-item"><a class="btn-auth" onclick="showAuthPage('login')">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN HOME PAGE VIEW -->
+    <div id="home-view" class="page-view active">
+        <div class="page-bg">
+            <div class="container">
+                
+                <!-- TOP WELCOME BANNER -->
+                <div id="hero-sec" class="hero-banner">
+                    <h1>World Currency Converter</h1>
+                    <p>Welcome to World Currency Converter Website</p>
+                </div>
+
+                <!-- Currency Converter Section -->
+                <div id="converter-sec" class="card">
+                    <h2><i class="fa-solid fa-calculator"></i> Currency Converter</h2>
+                    <div class="converter-form">
+                        <div class="input-group">
+                            <label>Enter Amount:</label>
+                            <input type="number" id="amount" value="1" min="1">
+                        </div>
+
+                        <div class="input-group">
+                            <label>From Currency (You Have):</label>
+                            <div class="select-box">
+                                <img id="from-flag" src="https://flagcdn.com/w40/eu.png" alt="flag">
+                                <select id="from-currency"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>To Currency (You Want):</label>
+                            <div class="select-box">
+                                <img id="to-flag" src="https://flagcdn.com/w40/pk.png" alt="flag">
+                                <select id="to-currency"></select>
+                            </div>
+                        </div>
+
+                        <button class="btn-convert" onclick="convertCurrency()">CONVERT</button>
+                        <div id="result" class="result-box"></div>
+                    </div>
+                </div>
+
+                <!-- Contact Us Section -->
+                <div id="contact-sec" class="card">
+                    <h2><i class="fa-solid fa-envelope"></i> Contact Us</h2>
+                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Name:</strong> Daniyal Ahmed</div>
+                    <div class="info-detail"><i class="fa-solid fa-at"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com</div>
+                    
+                    <form onsubmit="sendEmail(event)">
+                        <div class="input-group">
+                            <label>Your Message:</label>
+                            <textarea id="contact-msg" placeholder="Write your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-convert" style="margin-top:10px;">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- About Us Section -->
+                <div id="about-sec" class="card">
+                    <h2><i class="fa-solid fa-circle-info"></i> About Us</h2>
+                    <p style="line-height:1.6; margin-bottom: 15px;">
+                        Welcome to <strong>World Currency Converter</strong>! We offer live, up-to-date real-time exchange rates for almost every country in the world. Designed with a clean interface and smooth mobile response, you can calculate foreign exchanges easily on any device.
+                    </p>
+                    <h4 style="margin-bottom:8px;">Features:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.6; margin-bottom: 20px;">
+                        <li>Real-time exchange rate updates</li>
+                        <li>Supports currencies from all recognized world nations</li>
+                        <li>Responsive design for Desktop & Mobile viewports</li>
+                        <li>User authentication system</li>
+                    </ul>
+                    <h3 style="text-align:center; color:#0ea5e9;">Thank You For Using This Website</h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE VIEW -->
+    <div id="login-view" class="page-view">
+        <div class="auth-bg">
+            <div class="auth-card">
+                <h2>Login</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-convert">Login</button>
+                </form>
+                <div class="auth-toggle">
+                    Don't have an account? <a onclick="showAuthPage('signup')">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP PAGE VIEW -->
+    <div id="signup-view" class="page-view">
+        <div class="auth-bg">
+            <div class="auth-card">
+                <h2>Sign Up</h2>
+                <form onsubmit="handleSignup(event)">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="signup-fullname" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Gmail ID</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <button type="submit" class="btn-convert">Create Account</button>
+                </form>
+                <div class="auth-toggle">
+                    Already registered? <a onclick="showAuthPage('login')">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGOUT PAGE VIEW -->
+    <div id="logout-view" class="page-view">
+        <div class="auth-bg">
+            <div class="auth-card">
+                <h2>Account Logout</h2>
+                <p style="text-align:center; margin-bottom:15px;" id="logout-user-msg">Enter your details to confirm logout.</p>
+                <form onsubmit="handleLogout(event)">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="logout-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="logout-password" required>
+                    </div>
+                    <button type="submit" class="btn-convert" style="background:#ef4444;">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Real-Time Currency List Mapping with Country Codes
+        const countryList = {
+            "AED": "AE", "AFN": "AF", "XCD": "AG", "ALL": "AL", "AMD": "AM", "ANG": "CW", "AOA": "AO", "AQD": "AQ", "ARS": "AR",
+            "AUD": "AU", "AZN": "AZ", "BAM": "BA", "BBD": "BB", "BDT": "BD", "XOF": "BE", "BGN": "BG", "BHD": "BH", "BIF": "BI",
+            "BMD": "BM", "BND": "BN", "BOB": "BO", "BRL": "BR", "BSD": "BS", "NOK": "BV", "BWP": "BW", "BYN": "BY", "BZD": "BZ",
+            "CAD": "CA", "CDF": "CD", "XAF": "CF", "CHF": "CH", "CLP": "CL", "CNY": "CN", "COP": "CO", "CRC": "CR", "CUP": "CU",
+            "CVE": "CV", "CYP": "CY", "CZK": "CZ", "DJF": "DJ", "DKK": "DK", "DOP": "DO", "DZD": "DZ", "EGP": "EG", "MAD": "EH",
+            "ERN": "ER", "ETB": "ET", "EUR": "FR", "FJD": "FJ", "FKP": "FK", "GBP": "GB", "GEL": "GE", "GHS": "GH", "GIP": "GI",
+            "GMD": "GM", "GNF": "GN", "GTQ": "GT", "GYD": "GY", "HKD": "HK", "HNL": "HN", "HRK": "HR", "HTG": "HT", "HUF": "HU",
+            "IDR": "ID", "ILS": "IL", "INR": "IN", "IQD": "IQ", "IRR": "IR", "ISK": "IS", "JMD": "JM", "JOD": "JO", "JPY": "JP",
+            "KES": "KE", "KGS": "KG", "KHR": "KH", "KMF": "KM", "KPW": "KP", "KRW": "KR", "KWD": "KW", "KYD": "KY", "KZT": "KZ",
+            "LAK": "LA", "LBP": "LB", "LKR": "LK", "LRD": "LR", "LSL": "LS", "LTL": "LT", "LVL": "LV", "LYD": "LY", "MAD": "MA",
+            "MDL": "MD", "MGA": "MG", "MKD": "MK", "MMK": "MM", "MNT": "MN", "MOP": "MO", "MRO": "MR", "MUR": "MU", "MVR": "MV",
+            "MWK": "MW", "MXN": "MX", "MYR": "MY", "MZN": "MZ", "NAD": "NA", "XPF": "NC", "NGN": "NG", "NIO": "NI", "NPR": "NP",
+            "NZD": "NZ", "OMR": "OM", "PAB": "PA", "PEN": "PE", "PGK": "PG", "PHP": "PH", "PKR": "PK", "PLN": "PL", "PYG": "PY",
+            "QAR": "QA", "RON": "RO", "RSD": "RS", "RUB": "RU", "RWF": "RW", "SAR": "SA", "SBD": "SB", "SCR": "SC", "SDG": "SD",
+            "SEK": "SE", "SGD": "SG", "SKK": "SK", "SLL": "SL", "SOS": "SO", "SRD": "SR", "STD": "ST", "SVC": "SV", "SYP": "SY",
+            "SZL": "SZ", "THB": "TH", "TJS": "TJ", "TMT": "TM", "TND": "TN", "TOP": "TO", "TRY": "TR", "TTD": "TT", "TWD": "TW",
+            "TZS": "TZ", "UAH": "UA", "UGX": "UG", "USD": "US", "UYU": "UY", "UZS": "UZ", "VEF": "VE", "VND": "VN", "VUV": "VU",
+            "YER": "YE", "ZAR": "ZA", "ZMK": "ZM", "ZWD": "ZW"
+        };
+
+        // Scroll state management for Auto-Hiding Navbar
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 70) {
+                header.classList.add('nav-hidden');
+            } else {
+                header.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // Initialize App & Currencies Options
+        const fromSelect = document.getElementById('from-currency');
+        const toSelect = document.getElementById('to-currency');
+
+        for (let currCode in countryList) {
+            let selectedFrom = currCode === "EUR" ? "selected" : "";
+            let selectedTo = currCode === "PKR" ? "selected" : "";
+
+            let option1 = `<option value="${currCode}" ${selectedFrom}>${currCode}</option>`;
+            let option2 = `<option value="${currCode}" ${selectedTo}>${currCode}</option>`;
+
+            fromSelect.insertAdjacentHTML("beforeend", option1);
+            toSelect.insertAdjacentHTML("beforeend", option2);
+        }
+
+        fromSelect.addEventListener("change", (e) => updateFlag(e.target, "from-flag"));
+        toSelect.addEventListener("change", (e) => updateFlag(e.target, "to-flag"));
+
+        function updateFlag(element, flagImgId) {
+            let currCode = element.value;
+            let countryCode = countryList[currCode];
+            let imgTag = document.getElementById(flagImgId);
+            imgTag.src = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+        }
+
+        // Real-Time Currency Conversion API Call
+        async function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const fromCurr = fromSelect.value;
+            const toCurr = toSelect.value;
+            const resultBox = document.getElementById('result');
+
+            if (amount === "" || amount < 1) return;
+
+            resultBox.style.display = "block";
+            resultBox.innerText = "Fetching real-time rate...";
+
+            try {
+                let url = `https://open.er-api.com/v6/latest/${fromCurr}`;
+                let response = await fetch(url);
+                let data = await response.json();
+                let exchangeRate = data.rates[toCurr];
+                let totalConvertedAmount = (amount * exchangeRate).toFixed(2);
+
+                resultBox.innerText = `${amount} ${fromCurr} = ${totalConvertedAmount} ${toCurr}`;
+            } catch (error) {
+                resultBox.innerText = "Error fetching rate. Try again.";
+            }
+        }
+
+        // Scroll To Page Section
+        function scrollToSection(secId) {
+            showView('home-view');
+            setTimeout(() => {
+                document.getElementById(secId).scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // View Navigation Manager
+        function showView(viewId) {
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function showAuthPage(type) {
+            if (type === 'login') showView('login-view');
+            else if (type === 'signup') showView('signup-view');
+            else if (type === 'logout') showView('logout-view');
+        }
+
+        // User Management System Logic
+        let currentUser = JSON.parse(localStorage.getItem('logged_user')) || null;
+
+        function checkAuthStatus() {
+            const authNavItem = document.getElementById('auth-nav-item');
+            if (currentUser) {
+                authNavItem.innerHTML = `<a class="btn-auth" style="background:#ef4444;" onclick="showAuthPage('logout')">Logout (${currentUser.username})</a>`;
+            } else {
+                authNavItem.innerHTML = `<a class="btn-auth" onclick="showAuthPage('login')">Login</a>`;
+            }
+        }
+        checkAuthStatus();
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const user = {
+                fullName: document.getElementById('signup-fullname').value,
+                email: document.getElementById('signup-email').value,
+                username: document.getElementById('signup-username').value,
+                password: document.getElementById('signup-password').value
+            };
+            localStorage.setItem(`user_${user.username}`, JSON.stringify(user));
+            alert("Account created successfully! Please Login.");
+            showAuthPage('login');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const uname = document.getElementById('login-username').value;
+            const pass = document.getElementById('login-password').value;
+
+            const storedUser = JSON.parse(localStorage.getItem(`user_${uname}`));
+
+            if (storedUser && storedUser.password === pass) {
+                currentUser = storedUser;
+                localStorage.setItem('logged_user', JSON.stringify(currentUser));
+                checkAuthStatus();
+                alert(`Welcome ${currentUser.fullName}!`);
+                showView('home-view');
+            } else {
+                alert("Invalid Username or Password!");
+            }
+        }
+
+        function handleLogout(e) {
+            e.preventDefault();
+            const uname = document.getElementById('logout-username').value;
+            const pass = document.getElementById('logout-password').value;
+
+            if (currentUser && currentUser.username === uname && currentUser.password === pass) {
+                localStorage.removeItem('logged_user');
+                currentUser = null;
+                checkAuthStatus();
+                alert("Logged out successfully!");
+                showView('home-view');
+            } else {
+                alert("Credentials do not match logged in user!");
+            }
+        }
+
+        // Contact Us Email Functionality
+        function sendEmail(e) {
+            e.preventDefault();
+            const msg = document.getElementById('contact-msg').value;
+            window.location.href = `mailto:daniyalahmed5941@gmail.com?subject=Inquiry from World Currency Converter&body=${encodeURIComponent(msg)}`;
+        }
+    </script>
+</body>
+</html>
