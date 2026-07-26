@@ -464,26 +464,24 @@
     </div>
 
     <!-- LOGOUT PAGE VIEW -->
-    <div id="logout-view" class="page-view">
-        <div class="auth-bg">
-            <div class="auth-card">
-                <h2>Account Logout</h2>
-                <p style="text-align:center; margin-bottom:15px;" id="logout-user-msg">Enter your details to confirm logout.</p>
-                <form onsubmit="handleLogout(event)">
-                    <div class="input-group">
-                        <label>Username</label>
-                        <input type="text" id="logout-username" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Password</label>
-                        <input type="password" id="logout-password" required>
-                    </div>
-                    <button type="submit" style="white-space: nowrap;">Logout</button>
-                    
-                </form>
-            </div>
+     <div id="logout-view" class="page-view">
+    <div class="auth-bg">
+        <div class="auth-card">
+            <h2>Account Login</h2>
+            <p style="text-align:center; margin-bottom:15px;" id="logout-user-msg">Enter your details</p>
+            <form onsubmit="handleLogout(event)">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="logout-username" required>
+                </div>
+                <div class="input-group">
+                    <!-- password ya baaki inputs -->
+                </div>
+            </form>
         </div>
     </div>
+     </div>
+    
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
