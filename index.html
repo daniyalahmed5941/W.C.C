@@ -1,63 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Currency Converter</title>
-    <!-- FontAwesome Icons -->
+    <meta name="description" content="World Currency Converter - Fast, accurate, real-time foreign exchange rate converter with live market data, currency charts, and instant calculations.">
+    <meta name="keywords" content="currency converter, exchange rates, foreign exchange, forex rates, live currency conversion, PKR, USD, EUR">
+    <meta name="author" content="Daniyal Ahmed">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="World Currency Converter | Live Exchange Rates">
+    <meta property="og:description" content="Convert global currencies with real-time accuracy and interactive design.">
+    <meta property="og:type" content="website">
+
+    <title>World Currency Converter | Real-Time Exchange Rates</title>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/jpg" href="logo image.jpg">
 
-    <style> 
-        /* CSS Reset & Base Styles */
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-hover: #0284c7;
+            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --input-border: rgba(255, 255, 255, 0.15);
+            --header-bg: rgba(15, 23, 42, 0.85);
+            --footer-bg: rgba(15, 23, 42, 0.95);
+            --success-color: #10b981;
+            --card-hover-y: -5px;
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-color: #0284c7;
+            --accent-hover: #0369a1;
+            --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --input-border: rgba(203, 213, 225, 0.8);
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --footer-bg: #0f172a;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: all 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
         }
 
-        /* Background Layers */
-        .page-bg {
-            min-height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
-            color: #fff;
-            padding-top: 90px;
-            padding-bottom: 50px;
+        /* Glassmorphism Reusable Style */
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
         }
 
-        .auth-bg {
-            min-height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        /* Auto Hiding Navbar */
+        /* Header & Navbar */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
+            height: 75px;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5%;
+            padding: 0 8%;
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transform: translateY(0);
+            border-bottom: 1px solid var(--card-border);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         header.nav-hidden {
@@ -65,97 +108,167 @@
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: 700;
-            color: #38bdf8;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-color);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 24px;
+            background: linear-gradient(45deg, #0284c7, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 25px;
             align-items: center;
         }
 
         nav a {
-            color: #f8fafc;
+            color: var(--text-primary);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 15px;
             cursor: pointer;
+            position: relative;
+            padding: 5px 0;
         }
 
-        nav a:hover {
-            color: #38bdf8;
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: rotate(15deg);
         }
 
         .btn-auth {
-            background: #38bdf8;
-            color: #0f172a !important;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600 !important;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #ffffff !important;
+            padding: 9px 20px;
+            border-radius: 12px;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
         }
 
         .btn-auth:hover {
-            background: #0284c7;
-            color: #fff !important;
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
 
-        /* Hero Welcome Section */
-        .hero-banner {
-            text-align: center;
-            padding: 40px 20px 30px;
-            margin-bottom: 20px;
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 22px;
+            color: var(--text-primary);
         }
 
-        .hero-banner h1 {
-            font-size: 42px;
-            color: #38bdf8;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        /* Layout & Wrapper */
+        .page-wrapper {
+            flex: 1;
+            padding-top: 110px;
+            padding-bottom: 60px;
         }
 
-        .hero-banner p {
-            font-size: 20px;
-            color: #e2e8f0;
-            font-weight: 300;
-        }
-
-        /* App Main Layout */
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
+        .hero-banner {
+            text-align: center;
+            padding: 30px 20px 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-banner h1 {
+            font-size: 44px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .hero-banner p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Converter Card Styling */
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            color: #1e293b;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            padding: 35px;
+            margin-bottom: 35px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .card:hover {
+            transform: translateY(var(--card-hover-y));
         }
 
         .card h2 {
-            margin-bottom: 20px;
-            color: #0f172a;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        /* Converter UI */
-        .converter-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .card h2 i {
+            color: var(--accent-color);
+        }
+
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+            margin-top: 20px;
         }
 
         .input-group {
@@ -167,146 +280,245 @@
         .input-group label {
             font-weight: 600;
             font-size: 14px;
+            color: var(--text-secondary);
         }
 
-        .input-group input, .select-box select {
+        .input-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
             font-size: 16px;
+            color: var(--text-primary);
             outline: none;
         }
 
-        .select-box {
-            display: flex;
-            align-items: center;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            padding: 0 10px;
-            background: #fff;
+        .input-group input:focus {
+            border-color: var(--accent-color);
         }
 
-        .select-box img {
+        /* Custom Dropdown Searchable Container */
+        .currency-select-wrapper {
+            position: relative;
+        }
+
+        .currency-select-box {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            cursor: pointer;
+            gap: 10px;
+        }
+
+        .currency-select-box img {
             width: 30px;
             height: 20px;
             object-fit: cover;
-            border-radius: 2px;
-            margin-right: 10px;
+            border-radius: 4px;
         }
 
-        .select-box select {
-            border: none;
-            background: transparent;
+        .currency-select-box span {
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 105%;
+            left: 0;
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            padding: 10px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .dropdown-search {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            outline: none;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        .dropdown-item img {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        /* Swap Button */
+        .swap-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--accent-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 22px;
+            transition: transform 0.3s ease;
+        }
+
+        .swap-btn:hover {
+            transform: rotate(180deg);
+            background: var(--accent-color);
+            color: #fff;
         }
 
         .btn-convert {
-            background: #0ea5e9;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 16px;
             font-size: 16px;
-            font-weight: 600;
-            border-radius: 6px;
+            font-weight: 700;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 25px;
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
         }
 
         .btn-convert:hover {
-            background: #0284c7;
+            opacity: 0.95;
+            transform: translateY(-2px);
         }
 
         .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 6px;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 12px;
             text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #15803d;
             display: none;
+            animation: fadeIn 0.4s ease;
         }
 
-        /* Contact & About Sections */
+        .result-main {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--success-color);
+        }
+
+        .rate-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            display: none;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top: 3px solid var(--accent-color);
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Forms & Cards */
+        textarea {
+            width: 100%;
+            padding: 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            height: 110px;
+            resize: none;
+            color: var(--text-primary);
+            outline: none;
+        }
+
         .info-detail {
-            margin-bottom: 15px;
-            font-size: 16px;
+            margin-bottom: 12px;
+            font-size: 15px;
         }
 
         .info-detail i {
-            color: #0ea5e9;
+            color: var(--accent-color);
             margin-right: 10px;
         }
 
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            height: 100px;
-            resize: none;
+        .auth-bg {
+            min-height: calc(100vh - 170px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* Auth Cards */
         .auth-card {
-            background: #fff;
             width: 100%;
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            color: #333;
+            max-width: 420px;
+            padding: 40px;
         }
 
         .auth-card h2 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #0f172a;
-        }
-
-        .auth-card .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .auth-toggle {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 14px;
+            color: var(--text-secondary);
         }
 
         .auth-toggle a {
-            color: #0ea5e9;
+            color: var(--accent-color);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 0 4%;
-            }
-            .logo span {
-                display: none;
-            }
-            nav ul {
-                gap: 10px;
-            }
-            nav a {
-                font-size: 13px;
-            }
-            .hero-banner h1 {
-                font-size: 30px;
-            }
-            .hero-banner p {
-                font-size: 16px;
-            }
-        }
-
-        /* View Control */
+        /* Views System */
         .page-view {
             display: none;
         }
@@ -314,182 +526,380 @@
         .page-view.active {
             display: block;
         }
+
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            border-top: 1px solid var(--card-border);
+            color: #94a3b8;
+            padding: 50px 8% 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links h4, .footer-contact h4 {
+            color: #f8fafc;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 5%;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 75px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 75px);
+                background: var(--header-bg);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                transition: left 0.3s ease;
+            }
+
+            nav.mobile-active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .converter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .swap-btn {
+                margin: 0 auto;
+                transform: rotate(90deg);
+            }
+
+            .swap-btn:hover {
+                transform: rotate(270deg);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-banner h1 {
+                font-size: 32px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation Bar -->
+    <!-- Header Navigation -->
     <header id="main-header">
-        <div class="logo">
+        <a class="logo" onclick="scrollToSection('hero-sec')">
             <i class="fa-solid fa-coins"></i>
-            <span>World Currency Converter</span>
-        </div>
-        <nav>
+            <span>World Currency</span>
+        </a>
+
+        <nav id="nav-menu">
             <ul>
                 <li><a onclick="scrollToSection('hero-sec')">Home</a></li>
-                <li><a onclick="scrollToSection('contact-sec')">Contact Us</a></li>
-                <li><a onclick="scrollToSection('about-sec')">About Us</a></li>
-                <li id="auth-nav-item"><a class="btn-auth" onclick="showAuthPage('login')">Login</a></li>
+                <li><a onclick="scrollToSection('converter-sec')">Converter</a></li>
+                <li><a onclick="scrollToSection('contact-sec')">Contact</a></li>
+                <li><a onclick="scrollToSection('about-sec')">About</a></li>
+                <li id="auth-nav-item">
+                    <a class="btn-auth" onclick="showAuthPage('login')">Login</a>
+                </li>
             </ul>
         </nav>
+
+        <div class="nav-controls">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars" id="menu-icon"></i>
+            </div>
+        </div>
     </header>
 
-    <!-- MAIN HOME PAGE VIEW -->
-    <div id="home-view" class="page-view active">
-        <div class="page-bg">
+    <!-- Main Container Wrapper -->
+    <div class="page-wrapper">
+        
+        <!-- HOME PAGE VIEW -->
+        <div id="home-view" class="page-view active">
             <div class="container">
                 
-                <!-- TOP WELCOME BANNER -->
+                <!-- Hero Section -->
                 <div id="hero-sec" class="hero-banner">
-                    <h1>World Currency Converter</h1>
-                    <p>Welcome to World Currency Converter Website</p>
+                    <h1>Global Currency Exchange</h1>
+                    <p>Real-time market exchange rates and instant conversion calculator.</p>
                 </div>
 
-                <!-- Currency Converter Section -->
-                <div id="converter-sec" class="card">
+                <!-- Currency Converter Card -->
+                <div id="converter-sec" class="card glass">
                     <h2><i class="fa-solid fa-calculator"></i> Currency Converter</h2>
-                    <div class="converter-form">
-                        <div class="input-group">
-                            <label>Enter Amount:</label>
-                            <input type="number" id="amount" value="1" min="1">
-                        </div>
+                    
+                    <div class="input-group">
+                        <label>Amount</label>
+                        <input type="number" id="amount" value="1" min="1" placeholder="Enter amount">
+                    </div>
 
+                    <div class="converter-grid">
+                        <!-- From Currency -->
                         <div class="input-group">
-                            <label>From Currency (You Have):</label>
-                            <div class="select-box">
-                                <img id="from-flag" src="https://flagcdn.com/w40/eu.png" alt="flag">
-                                <select id="from-currency"></select>
+                            <label>From</label>
+                            <div class="currency-select-wrapper">
+                                <div class="currency-select-box" onclick="toggleDropdown('from-dropdown')">
+                                    <img id="from-flag" src="https://flagcdn.com/w40/eu.png" alt="flag">
+                                    <span id="from-code">EUR</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div id="from-dropdown" class="dropdown-menu">
+                                    <input type="text" class="dropdown-search" placeholder="Search currency..." onkeyup="filterCurrencies(this, 'from-list')">
+                                    <div id="from-list"></div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Swap Button -->
+                        <button class="swap-btn" onclick="swapCurrencies()" title="Swap Currencies">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </button>
+
+                        <!-- To Currency -->
                         <div class="input-group">
-                            <label>To Currency (You Want):</label>
-                            <div class="select-box">
-                                <img id="to-flag" src="https://flagcdn.com/w40/pk.png" alt="flag">
-                                <select id="to-currency"></select>
+                            <label>To</label>
+                            <div class="currency-select-wrapper">
+                                <div class="currency-select-box" onclick="toggleDropdown('to-dropdown')">
+                                    <img id="to-flag" src="https://flagcdn.com/w40/pk.png" alt="flag">
+                                    <span id="to-code">PKR</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div id="to-dropdown" class="dropdown-menu">
+                                    <input type="text" class="dropdown-search" placeholder="Search currency..." onkeyup="filterCurrencies(this, 'to-list')">
+                                    <div id="to-list"></div>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <button class="btn-convert" onclick="convertCurrency()">CONVERT</button>
-                        <div id="result" class="result-box"></div>
+                    <button class="btn-convert" onclick="convertCurrency()">Convert Currency</button>
+                    <div class="loader" id="loader"></div>
+
+                    <div id="result" class="result-box">
+                        <div id="result-text" class="result-main"></div>
+                        <div id="rate-update" class="rate-info"></div>
                     </div>
                 </div>
 
-                <!-- Contact Us Section -->
-                <div id="contact-sec" class="card">
-                    <h2><i class="fa-solid fa-envelope"></i> Contact Us</h2>
-                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Name:</strong> Daniyal Ahmed</div>
-                    <div class="info-detail"><i class="fa-solid fa-at"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com</div>
+                <!-- Contact Section -->
+                <div id="contact-sec" class="card glass">
+                    <h2><i class="fa-solid fa-envelope"></i> Contact Support</h2>
+                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Developer:</strong> Daniyal Ahmed</div>
+                    <div class="info-detail"><i class="fa-solid fa-paper-plane"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com</div>
                     
-                    <form onsubmit="sendEmail(event)">
+                    <form onsubmit="sendEmail(event)" style="margin-top: 15px;">
                         <div class="input-group">
-                            <label>Your Message:</label>
-                            <textarea id="contact-msg" placeholder="Write your message here..." required></textarea>
+                            <label>Your Message</label>
+                            <textarea id="contact-msg" placeholder="Write your query here..." required></textarea>
                         </div>
-                        <button type="submit" class="btn-convert" style="margin-top:10px;">Send Message</button>
+                        <button type="submit" class="btn-convert" style="margin-top: 15px;">Send Direct Email</button>
                     </form>
                 </div>
 
-                <!-- About Us Section -->
-                <div id="about-sec" class="card">
-                    <h2><i class="fa-solid fa-circle-info"></i> About Us</h2>
-                    <p style="line-height:1.6; margin-bottom: 15px;">
-                        Welcome to <strong>World Currency Converter</strong>! We offer live, up-to-date real-time exchange rates for almost every country in the world. Designed with a clean interface and smooth mobile response, you can calculate foreign exchanges easily on any device.
+                <!-- About Section -->
+                <div id="about-sec" class="card glass">
+                    <h2><i class="fa-solid fa-circle-info"></i> About Platform</h2>
+                    <p style="line-height:1.7; color: var(--text-secondary); margin-bottom: 20px;">
+                        Welcome to <strong>World Currency Converter</strong>. We deliver precise, updated financial exchange data globally. Built with ultra-modern UI elements including full dark/light theme switching and responsive controls for seamless experience across all screen sizes.
                     </p>
-                    <h4 style="margin-bottom:8px;">Features:</h4>
-                    <ul style="margin-left: 20px; line-height: 1.6; margin-bottom: 20px;">
-                        <li>Real-time exchange rate updates</li>
-                        <li>Supports currencies from all recognized world nations</li>
-                        <li>Responsive design for Desktop & Mobile viewports</li>
-                        <li>User authentication system</li>
+                    <h4 style="margin-bottom: 12px;">Highlights:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8; color: var(--text-secondary);">
+                        <li>Live exchange rates sourced from open API streams</li>
+                        <li>Support for 150+ global nation currencies</li>
+                        <li>Searchable currency pickers with flag indicators</li>
+                        <li>Lightweight, mobile-first responsive architecture</li>
                     </ul>
-                    <h3 style="text-align:center; color:#0ea5e9;">Thank You For Using This Website</h3>
                 </div>
 
             </div>
         </div>
-    </div>
 
-    <!-- LOGIN PAGE VIEW -->
-    <div id="login-view" class="page-view">
-        <div class="auth-bg">
-            <div class="auth-card">
-                <h2>Login</h2>
-                <form onsubmit="handleLogin(event)">
-                    <div class="input-group">
-                        <label>Username</label>
-                        <input type="text" id="login-username" required>
+        <!-- LOGIN VIEW -->
+        <div id="login-view" class="page-view">
+            <div class="auth-bg">
+                <div class="auth-card card glass">
+                    <h2>Account Login</h2>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="input-group" style="margin-bottom: 15px;">
+                            <label>Username</label>
+                            <input type="text" id="login-username" required placeholder="Enter username">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <label>Password</label>
+                            <input type="password" id="login-password" required placeholder="Enter password">
+                        </div>
+                        <button type="submit" class="btn-convert">Login</button>
+                    </form>
+                    <div class="auth-toggle">
+                        Don't have an account? <a onclick="showAuthPage('signup')">Sign Up</a>
                     </div>
-                    <div class="input-group">
-                        <label>Password</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <button type="submit" class="btn-convert">Login</button>
-                </form>
-                <div class="auth-toggle">
-                    Don't have an account? <a onclick="showAuthPage('signup')">Sign Up</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- SIGNUP PAGE VIEW -->
-    <div id="signup-view" class="page-view">
-        <div class="auth-bg">
-            <div class="auth-card">
-                <h2>Sign Up</h2>
-                <form onsubmit="handleSignup(event)">
-                    <div class="input-group">
-                        <label>Full Name</label>
-                        <input type="text" id="signup-fullname" required>
+        <!-- SIGNUP VIEW -->
+        <div id="signup-view" class="page-view">
+            <div class="auth-bg">
+                <div class="auth-card card glass">
+                    <h2>Create Account</h2>
+                    <form onsubmit="handleSignup(event)">
+                        <div class="input-group" style="margin-bottom: 12px;">
+                            <label>Full Name</label>
+                            <input type="text" id="signup-fullname" required placeholder="John Doe">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 12px;">
+                            <label>Email Address</label>
+                            <input type="email" id="signup-email" required placeholder="name@domain.com">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 12px;">
+                            <label>Username</label>
+                            <input type="text" id="signup-username" required placeholder="Choose username">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <label>Password</label>
+                            <input type="password" id="signup-password" required placeholder="Choose password">
+                        </div>
+                        <button type="submit" class="btn-convert">Register</button>
+                    </form>
+                    <div class="auth-toggle">
+                        Already registered? <a onclick="showAuthPage('login')">Login</a>
                     </div>
-                    <div class="input-group">
-                        <label>Gmail ID</label>
-                        <input type="email" id="signup-email" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Username</label>
-                        <input type="text" id="signup-username" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Password</label>
-                        <input type="password" id="signup-password" required>
-                    </div>
-                    <button type="submit" class="btn-convert">Create Account</button>
-                </form>
-                <div class="auth-toggle">
-                    Already registered? <a onclick="showAuthPage('login')">Login</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- LOGOUT PAGE VIEW -->
-    <div id="logout-view" class="page-view">
-        <div class="auth-bg">
-            <div class="auth-card">
-                <h2>Account Logout</h2>
-                <p style="text-align:center; margin-bottom:15px;" id="logout-user-msg">
-                    Welcome <span id="display-logout-user" style="color:#ef4444; font-weight:bold;"></span>, enter your details to confirm logout.
-                </p>
-                <form onsubmit="handleLogout(event)">
-                    <div class="input-group">
-                        <label>Username</label>
-                        <input type="text" id="logout-username" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Password</label>
-                        <input type="password" id="logout-password" required>
-                    </div>
-                    <button type="submit" class="btn-convert" style="background:#ef4444;">Logout</button>
-                </form>
+        <!-- LOGOUT VIEW -->
+        <div id="logout-view" class="page-view">
+            <div class="auth-bg">
+                <div class="auth-card card glass">
+                    <h2>Confirm Logout</h2>
+                    <p style="text-align:center; margin-bottom:20px; color: var(--text-secondary);">
+                        Session active for: <strong id="display-logout-user" style="color:var(--accent-color);"></strong>
+                    </p>
+                    <form onsubmit="handleLogout(event)">
+                        <div class="input-group" style="margin-bottom: 15px;">
+                            <label>Verify Username</label>
+                            <input type="text" id="logout-username" required>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <label>Verify Password</label>
+                            <input type="password" id="logout-password" required>
+                        </div>
+                        <button type="submit" class="btn-convert" style="background: linear-gradient(135deg, #ef4444, #dc2626);">Logout Now</button>
+                    </form>
+                </div>
             </div>
         </div>
+
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">
+                    <i class="fa-solid fa-coins" style="color: var(--accent-color);"></i>
+                    <span>World Currency</span>
+                </div>
+                <p style="font-size: 14px; line-height: 1.6;">Providing reliable, smooth, and modern live currency exchange rate calculation interfaces for everyday global needs.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a onclick="scrollToSection('hero-sec')">Home</a></li>
+                    <li><a onclick="scrollToSection('converter-sec')">Converter</a></li>
+                    <li><a onclick="scrollToSection('contact-sec')">Contact</a></li>
+                    <li><a onclick="scrollToSection('about-sec')">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Developer Contact</h4>
+                <p style="font-size: 14px; margin-bottom: 8px;"><i class="fa-solid fa-user"></i> Daniyal Ahmed</p>
+                <p style="font-size: 14px;"><i class="fa-solid fa-envelope"></i> daniyalahmed5941@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 World Currency Converter. Designed & Developed with Precision.
+        </div>
+    </footer>
+
+    <!-- JavaScript Script Code -->
     <script>
-        // Real-Time Currency List Mapping with Country Codes
+        // Currency to Country mapping table
         const countryList = {
             "AED": "AE", "AFN": "AF", "XCD": "AG", "ALL": "AL", "AMD": "AM", "ANG": "CW", "AOA": "AO", "AQD": "AQ", "ARS": "AR",
             "AUD": "AU", "AZN": "AZ", "BAM": "BA", "BBD": "BB", "BDT": "BD", "XOF": "BE", "BGN": "BG", "BHD": "BH", "BIF": "BI",
@@ -500,24 +910,27 @@
             "GMD": "GM", "GNF": "GN", "GTQ": "GT", "GYD": "GY", "HKD": "HK", "HNL": "HN", "HRK": "HR", "HTG": "HT", "HUF": "HU",
             "IDR": "ID", "ILS": "IL", "INR": "IN", "IQD": "IQ", "IRR": "IR", "ISK": "IS", "JMD": "JM", "JOD": "JO", "JPY": "JP",
             "KES": "KE", "KGS": "KG", "KHR": "KH", "KMF": "KM", "KPW": "KP", "KRW": "KR", "KWD": "KW", "KYD": "KY", "KZT": "KZ",
-            "LAK": "LA", "LBP": "LB", "LKR": "LK", "LRD": "LR", "LSL": "LS", "LTL": "LT", "LVL": "LV", "LYD": "LY", "MAD": "MA",
-            "MDL": "MD", "MGA": "MG", "MKD": "MK", "MMK": "MM", "MNT": "MN", "MOP": "MO", "MRO": "MR", "MUR": "MU", "MVR": "MV",
-            "MWK": "MW", "MXN": "MX", "MYR": "MY", "MZN": "MZ", "NAD": "NA", "XPF": "NC", "NGN": "NG", "NIO": "NI", "NPR": "NP",
-            "NZD": "NZ", "OMR": "OM", "PAB": "PA", "PEN": "PE", "PGK": "PG", "PHP": "PH", "PKR": "PK", "PLN": "PL", "PYG": "PY",
-            "QAR": "QA", "RON": "RO", "RSD": "RS", "RUB": "RU", "RWF": "RW", "SAR": "SA", "SBD": "SB", "SCR": "SC", "SDG": "SD",
-            "SEK": "SE", "SGD": "SG", "SKK": "SK", "SLL": "SL", "SOS": "SO", "SRD": "SR", "STD": "ST", "SVC": "SV", "SYP": "SY",
-            "SZL": "SZ", "THB": "TH", "TJS": "TJ", "TMT": "TM", "TND": "TN", "TOP": "TO", "TRY": "TR", "TTD": "TT", "TWD": "TW",
-            "TZS": "TZ", "UAH": "UA", "UGX": "UG", "USD": "US", "UYU": "UY", "UZS": "UZ", "VEF": "VE", "VND": "VN", "VUV": "VU",
-            "YER": "YE", "ZAR": "ZA", "ZMK": "ZM", "ZWD": "ZW"
+            "LAK": "LA", "LBP": "LB", "LKR": "LK", "LRD": "LR", "LSL": "LS", "LTL": "LT", "LVL": "LV", "LYD": "LY", "MDL": "MD",
+            "MGA": "MG", "MKD": "MK", "MMK": "MM", "MNT": "MN", "MOP": "MO", "MRO": "MR", "MUR": "MU", "MVR": "MV", "MWK": "MW",
+            "MXN": "MX", "MYR": "MY", "MZN": "MZ", "NAD": "NA", "XPF": "NC", "NGN": "NG", "NIO": "NI", "NPR": "NP", "NZD": "NZ",
+            "OMR": "OM", "PAB": "PA", "PEN": "PE", "PGK": "PG", "PHP": "PH", "PKR": "PK", "PLN": "PL", "PYG": "PY", "QAR": "QA",
+            "RON": "RO", "RSD": "RS", "RUB": "RU", "RWF": "RW", "SAR": "SA", "SBD": "SB", "SCR": "SC", "SDG": "SD", "SEK": "SE",
+            "SGD": "SG", "SKK": "SK", "SLL": "SL", "SOS": "SO", "SRD": "SR", "STD": "ST", "SVC": "SV", "SYP": "SY", "SZL": "SZ",
+            "THB": "TH", "TJS": "TJ", "TMT": "TM", "TND": "TN", "TOP": "TO", "TRY": "TR", "TTD": "TT", "TWD": "TW", "TZS": "TZ",
+            "UAH": "UA", "UGX": "UG", "USD": "US", "UYU": "UY", "UZS": "UZ", "VEF": "VE", "VND": "VN", "VUV": "VU", "YER": "YE",
+            "ZAR": "ZA", "ZMK": "ZM", "ZWD": "ZW"
         };
 
-        // Scroll state management for Auto-Hiding Navbar
+        // State & Navigation
+        let selectedFromCurr = "EUR";
+        let selectedToCurr = "PKR";
         let lastScrollTop = 0;
         const header = document.getElementById('main-header');
 
+        // Scroll auto hide navbar
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > 70) {
+            if (scrollTop > lastScrollTop && scrollTop > 80) {
                 header.classList.add('nav-hidden');
             } else {
                 header.classList.remove('nav-hidden');
@@ -525,65 +938,156 @@
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
 
-        // Initialize App & Currencies Options
-        const fromSelect = document.getElementById('from-currency');
-        const toSelect = document.getElementById('to-currency');
-
-        for (let currCode in countryList) {
-            let selectedFrom = currCode === "EUR" ? "selected" : "";
-            let selectedTo = currCode === "PKR" ? "selected" : "";
-
-            let option1 = `<option value="${currCode}" ${selectedFrom}>${currCode}</option>`;
-            let option2 = `<option value="${currCode}" ${selectedTo}>${currCode}</option>`;
-
-            fromSelect.insertAdjacentHTML("beforeend", option1);
-            toSelect.insertAdjacentHTML("beforeend", option2);
-        }
-
-        fromSelect.addEventListener("change", (e) => updateFlag(e.target, "from-flag"));
-        toSelect.addEventListener("change", (e) => updateFlag(e.target, "to-flag"));
-
-        function updateFlag(element, flagImgId) {
-            let currCode = element.value;
-            let countryCode = countryList[currCode];
-            let imgTag = document.getElementById(flagImgId);
-            imgTag.src = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
-        }
-
-        // Real-Time Currency Conversion API Call
-        async function convertCurrency() {
-            const amount = document.getElementById('amount').value;
-            const fromCurr = fromSelect.value;
-            const toCurr = toSelect.value;
-            const resultBox = document.getElementById('result');
-
-            if (amount === "" || amount < 1) return;
-
-            resultBox.style.display = "block";
-            resultBox.innerText = "Fetching real-time rate...";
-
-            try {
-                let url = `https://open.er-api.com/v6/latest/${fromCurr}`;
-                let response = await fetch(url);
-                let data = await response.json();
-                let exchangeRate = data.rates[toCurr];
-                let totalConvertedAmount = (amount * exchangeRate).toFixed(2);
-
-                resultBox.innerText = `${amount} ${fromCurr} = ${totalConvertedAmount} ${toCurr}`;
-            } catch (error) {
-                resultBox.innerText = "Error fetching rate. Try again.";
+        // Toggle Theme Logic
+        function toggleTheme() {
+            const htmlTag = document.documentElement;
+            const themeBtnIcon = document.querySelector('#theme-btn i');
+            if (htmlTag.getAttribute('data-theme') === 'dark') {
+                htmlTag.setAttribute('data-theme', 'light');
+                themeBtnIcon.className = 'fa-solid fa-sun';
+            } else {
+                htmlTag.setAttribute('data-theme', 'dark');
+                themeBtnIcon.className = 'fa-solid fa-moon';
             }
         }
 
-        // Scroll To Page Section
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const nav = document.getElementById('nav-menu');
+            const icon = document.getElementById('menu-icon');
+            nav.classList.toggle('mobile-active');
+            if (nav.classList.contains('mobile-active')) {
+                icon.className = 'fa-solid fa-xmark';
+            } else {
+                icon.className = 'fa-solid fa-bars';
+            }
+        }
+
+        // Initialize Custom Searchable Currency Dropdowns
+        function buildDropdownLists() {
+            const fromList = document.getElementById('from-list');
+            const toList = document.getElementById('to-list');
+
+            fromList.innerHTML = '';
+            toList.innerHTML = '';
+
+            for (let code in countryList) {
+                let country = countryList[code];
+                let flagUrl = `https://flagcdn.com/w40/${country.toLowerCase()}.png`;
+
+                let itemHtmlFrom = `
+                    <div class="dropdown-item" onclick="selectCurrency('${code}', 'from')">
+                        <img src="${flagUrl}" alt="${code}">
+                        <span>${code}</span>
+                    </div>`;
+
+                let itemHtmlTo = `
+                    <div class="dropdown-item" onclick="selectCurrency('${code}', 'to')">
+                        <img src="${flagUrl}" alt="${code}">
+                        <span>${code}</span>
+                    </div>`;
+
+                fromList.insertAdjacentHTML('beforeend', itemHtmlFrom);
+                toList.insertAdjacentHTML('beforeend', itemHtmlTo);
+            }
+        }
+
+        function toggleDropdown(id) {
+            const menu = document.getElementById(id);
+            const isVisible = menu.classList.contains('show');
+            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            if (!isVisible) menu.classList.add('show');
+        }
+
+        function filterCurrencies(input, listId) {
+            const filter = input.value.toUpperCase();
+            const items = document.getElementById(listId).getElementsByClassName('dropdown-item');
+            for (let i = 0; i < items.length; i++) {
+                let txtValue = items[i].textContent || items[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+
+        function selectCurrency(code, type) {
+            let country = countryList[code];
+            let flagUrl = `https://flagcdn.com/w40/${country.toLowerCase()}.png`;
+
+            if (type === 'from') {
+                selectedFromCurr = code;
+                document.getElementById('from-code').innerText = code;
+                document.getElementById('from-flag').src = flagUrl;
+                document.getElementById('from-dropdown').classList.remove('show');
+            } else {
+                selectedToCurr = code;
+                document.getElementById('to-code').innerText = code;
+                document.getElementById('to-flag').src = flagUrl;
+                document.getElementById('to-dropdown').classList.remove('show');
+            }
+        }
+
+        // Swap Currency Functionality
+        function swapCurrencies() {
+            let temp = selectedFromCurr;
+            selectCurrency(selectedToCurr, 'from');
+            selectCurrency(temp, 'to');
+        }
+
+        // Close dropdowns on outside click
+        window.onclick = function(e) {
+            if (!e.target.closest('.currency-select-wrapper')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            }
+        };
+
+        // Real-time API Currency Conversion
+        async function convertCurrency() {
+            const amountInput = document.getElementById('amount').value;
+            const resultBox = document.getElementById('result');
+            const resultText = document.getElementById('result-text');
+            const rateUpdate = document.getElementById('rate-update');
+            const loader = document.getElementById('loader');
+
+            if (amountInput === "" || amountInput < 0.01) return;
+
+            resultBox.style.display = "none";
+            loader.style.display = "block";
+
+            try {
+                let url = `https://open.er-api.com/v6/latest/${selectedFromCurr}`;
+                let response = await fetch(url);
+                let data = await response.json();
+                let rate = data.rates[selectedToCurr];
+                let total = (amountInput * rate).toFixed(2);
+                let lastUpdated = data.time_last_update_utc ? data.time_last_update_utc.substring(0, 16) : "Just Now";
+
+                loader.style.display = "none";
+                resultBox.style.display = "block";
+                resultText.innerText = `${amountInput} ${selectedFromCurr} = ${total} ${selectedToCurr}`;
+                rateUpdate.innerText = `1 ${selectedFromCurr} = ${rate.toFixed(4)} ${selectedToCurr} • Last Updated: ${lastUpdated}`;
+            } catch (error) {
+                loader.style.display = "none";
+                resultBox.style.display = "block";
+                resultText.innerText = "Error fetching current rate.";
+                rateUpdate.innerText = "Please check network connection.";
+            }
+        }
+
+        // Smooth Section Scroll
         function scrollToSection(secId) {
             showView('home-view');
+            const nav = document.getElementById('nav-menu');
+            if(nav.classList.contains('mobile-active')) toggleMobileMenu();
             setTimeout(() => {
-                document.getElementById(secId).scrollIntoView({ behavior: 'smooth' });
+                const el = document.getElementById(secId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
             }, 100);
         }
 
-        // View Navigation Manager
+        // View Management
         function showView(viewId) {
             document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
@@ -591,35 +1095,26 @@
         }
 
         function showAuthPage(type) {
-            if (type === 'login') {
-                showView('login-view');
-            } else if (type === 'signup') {
-                showView('signup-view');
-            } else if (type === 'logout') {
-                // Logout page par username display hoga
+            if (type === 'login') showView('login-view');
+            else if (type === 'signup') showView('signup-view');
+            else if (type === 'logout') {
                 const displayUser = document.getElementById('display-logout-user');
-                if (currentUser && currentUser.username) {
-                    displayUser.textContent = currentUser.username;
-                } else {
-                    displayUser.textContent = "";
-                }
+                displayUser.textContent = currentUser ? currentUser.username : "";
                 showView('logout-view');
             }
         }
 
-        // User Management System Logic
+        // Authentication State Logic
         let currentUser = JSON.parse(localStorage.getItem('logged_user')) || null;
 
         function checkAuthStatus() {
             const authNavItem = document.getElementById('auth-nav-item');
             if (currentUser) {
-                // Home/Navbar tab me STRICTLY sirf 'Logout' aayega
-                authNavItem.innerHTML = `<a class="btn-auth" style="background:#ef4444; color:#ffffff !important;" onclick="showAuthPage('logout')">Logout</a>`;
+                authNavItem.innerHTML = `<a class="btn-auth" style="background:linear-gradient(135deg, #ef4444, #dc2626);" onclick="showAuthPage('logout')">Logout</a>`;
             } else {
                 authNavItem.innerHTML = `<a class="btn-auth" onclick="showAuthPage('login')">Login</a>`;
             }
         }
-        checkAuthStatus();
 
         function handleSignup(e) {
             e.preventDefault();
@@ -630,7 +1125,7 @@
                 password: document.getElementById('signup-password').value
             };
             localStorage.setItem(`user_${user.username}`, JSON.stringify(user));
-            alert("Account created successfully! Please Login.");
+            alert("Account registered successfully! Please login.");
             showAuthPage('login');
         }
 
@@ -638,17 +1133,16 @@
             e.preventDefault();
             const uname = document.getElementById('login-username').value;
             const pass = document.getElementById('login-password').value;
-
             const storedUser = JSON.parse(localStorage.getItem(`user_${uname}`));
 
             if (storedUser && storedUser.password === pass) {
                 currentUser = storedUser;
                 localStorage.setItem('logged_user', JSON.stringify(currentUser));
                 checkAuthStatus();
-                alert(`Welcome ${currentUser.fullName}!`);
+                alert(`Welcome back, ${currentUser.fullName}!`);
                 showView('home-view');
             } else {
-                alert("Invalid Username or Password!");
+                alert("Invalid username or password credentials!");
             }
         }
 
@@ -661,19 +1155,24 @@
                 localStorage.removeItem('logged_user');
                 currentUser = null;
                 checkAuthStatus();
-                alert("Logged out successfully!");
+                alert("You have logged out successfully.");
                 showView('home-view');
             } else {
-                alert("Credentials do not match logged in user!");
+                alert("Credentials verification failed!");
             }
         }
 
-        // Contact Us Email Functionality
         function sendEmail(e) {
             e.preventDefault();
             const msg = document.getElementById('contact-msg').value;
             window.location.href = `mailto:daniyalahmed5941@gmail.com?subject=Inquiry from World Currency Converter&body=${encodeURIComponent(msg)}`;
         }
+
+        // On Load Init
+        window.addEventListener('DOMContentLoaded', () => {
+            buildDropdownLists();
+            checkAuthStatus();
+        });
     </script>
 </body>
 </html>
