@@ -1,0 +1,21 @@
+{
+  "name": "World Currency & Financial Suite",
+  "short_name": "CurrencySuite",
+  "description": "Live exchange rates, gold & silver prices, crypto tracker, EMI & tax calculators, and more.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "logo image.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "logo image.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
