@@ -20,913 +20,820 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- ⭐ Google Analytics — replace G-XXXXXXXXXX with your own Measurement ID from analytics.google.com -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
     <link rel="icon" type="image/jpg" href="logo%20image.jpg">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <link rel="canonical" href="https://yourdomain.com/">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+    :root {
+        /* Modern Gradient & Vibrant Color Palette */
+        --bg-gradient: radial-gradient(circle at 20% 20%, #1e1b4b 0%, #0f172a 45%, #020617 100%);
+        --card-bg: rgba(30, 41, 59, 0.65);
+        --card-border: rgba(255, 255, 255, 0.15);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --accent-color: #38bdf8;
+        --accent-glow: rgba(56, 189, 248, 0.4);
+        --accent-hover: #0284c7;
+        --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        --input-bg: rgba(15, 23, 42, 0.7);
+        --input-border: rgba(255, 255, 255, 0.18);
+        --header-bg: rgba(15, 23, 42, 0.75);
+        --footer-bg: rgba(2, 6, 23, 0.95);
+        --success-color: #10b981;
+        --gold-color: #fbbf24;
+        --silver-color: #e2e8f0;
+        --crypto-color: #c084fc;
+        --card-hover-y: -8px;
+    }
 
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-hover: #0284c7;
-            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-            --input-bg: rgba(15, 23, 42, 0.6);
-            --input-border: rgba(255, 255, 255, 0.15);
-            --header-bg: rgba(15, 23, 42, 0.85);
-            --footer-bg: rgba(15, 23, 42, 0.95);
-            --success-color: #10b981;
-            --gold-color: #f59e0b;
-            --silver-color: #cbd5e1;
-            --crypto-color: #a855f7;
-            --card-hover-y: -5px;
-        }
+    [data-theme="light"] {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
+        --card-bg: rgba(255, 255, 255, 0.82);
+        --card-border: rgba(255, 255, 255, 0.8);
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --accent-color: #0284c7;
+        --accent-glow: rgba(2, 132, 199, 0.25);
+        --accent-hover: #0369a1;
+        --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+        --input-bg: rgba(255, 255, 255, 0.95);
+        --input-border: rgba(203, 213, 225, 0.9);
+        --header-bg: rgba(255, 255, 255, 0.85);
+        --footer-bg: #0f172a;
+    }
 
-        [data-theme="light"] {
-            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
-            --card-bg: rgba(255, 255, 255, 0.75);
-            --card-border: rgba(255, 255, 255, 0.6);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --accent-color: #0284c7;
-            --accent-hover: #0369a1;
-            --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            --input-bg: rgba(255, 255, 255, 0.9);
-            --input-border: rgba(203, 213, 225, 0.8);
-            --header-bg: rgba(255, 255, 255, 0.85);
-            --footer-bg: #0f172a;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-        }
+    html {
+        scroll-behavior: smooth;
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    body {
+        background: var(--bg-gradient);
+        background-attachment: fixed;
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+    }
 
-        body {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+    /* Glassmorphism Design */
+    .glass {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        box-shadow: var(--glass-shadow);
+        position: relative;
+    }
 
-        .glass {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            box-shadow: var(--glass-shadow);
-        }
+    /* Modern Floating Header & Navbar */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 75px;
+        background: var(--header-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 6%;
+        z-index: 1000;
+        border-bottom: 1px solid var(--card-border);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        /* Header & Navbar */
-        header {
+    header.nav-hidden {
+        transform: translateY(-100%);
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+    }
+
+    .logo i {
+        font-size: 26px;
+        background: linear-gradient(135deg, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+    }
+
+    nav ul {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+        align-items: center;
+    }
+
+    nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+        padding: 8px 12px;
+        border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+
+    nav a:hover {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Dropdown Enhancements */
+    .dropdown-nav {
+        position: relative;
+    }
+
+    .dropdown-nav-menu {
+        position: absolute;
+        top: 120%;
+        left: 0;
+        background: var(--card-bg);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 10px;
+        min-width: 230px;
+        display: none;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        z-index: 1001;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-nav:hover .dropdown-nav-menu {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-nav-menu a {
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+    .dropdown-nav-menu a:hover {
+        background: rgba(56, 189, 248, 0.15);
+        color: var(--accent-color);
+        transform: translateX(4px);
+    }
+
+    .nav-controls {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .theme-toggle-btn {
+        background: var(--input-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-primary);
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .theme-toggle-btn:hover {
+        transform: rotate(20deg) scale(1.05);
+        border-color: var(--accent-color);
+    }
+
+    .btn-auth {
+        background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        color: #ffffff !important;
+        padding: 10px 22px;
+        border-radius: 12px;
+        font-weight: 700 !important;
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-auth:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 6px 25px rgba(56, 189, 248, 0.6);
+    }
+
+    .hamburger {
+        display: none;
+        cursor: pointer;
+        font-size: 22px;
+        color: var(--text-primary);
+    }
+
+    /* Layout & Hero Banner */
+    .page-wrapper {
+        flex: 1;
+        padding-top: 110px;
+        padding-bottom: 60px;
+    }
+
+    .container {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .hero-banner {
+        text-align: center;
+        padding: 30px 20px 40px;
+        animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-banner h1 {
+        font-size: 44px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #f43f5e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 14px;
+        text-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+    }
+
+    .hero-banner p {
+        font-size: 18px;
+        color: var(--text-secondary);
+        font-weight: 400;
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Animated Service Chips */
+    .services-shortcuts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 14px;
+        margin-bottom: 35px;
+    }
+
+    .service-chip {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        padding: 16px 12px;
+        border-radius: 16px;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--text-primary);
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-chip:hover {
+        transform: translateY(-5px) scale(1.03);
+        border-color: var(--accent-color);
+        background: rgba(56, 189, 248, 0.12);
+        box-shadow: 0 12px 25px rgba(56, 189, 248, 0.25);
+    }
+
+    .service-chip i {
+        font-size: 22px;
+        color: var(--accent-color);
+        transition: transform 0.3s ease;
+    }
+
+    .service-chip:hover i {
+        transform: scale(1.2);
+    }
+
+    /* Cards Redesign & Glow Effects */
+    .card {
+        padding: 35px;
+        margin-bottom: 35px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover {
+        transform: translateY(var(--card-hover-y));
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+    }
+
+    .card h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 22px;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--card-border);
+        padding-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        letter-spacing: -0.5px;
+    }
+
+    .card h2 i {
+        color: var(--accent-color);
+        filter: drop-shadow(0 0 8px var(--accent-glow));
+    }
+
+    /* Inputs & Custom Dropdowns */
+    .converter-grid {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 18px;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .input-group label {
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .input-group input, .input-group select {
+        width: 100%;
+        padding: 14px 16px;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 14px;
+        font-size: 16px;
+        color: var(--text-primary);
+        outline: none;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .input-group input:focus, .input-group select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .currency-select-box {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 14px;
+        cursor: pointer;
+        gap: 12px;
+        height: 50px;
+    }
+
+    .currency-select-box:hover {
+        border-color: var(--accent-color);
+    }
+
+    .currency-select-box img {
+        width: 30px;
+        height: 20px;
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .currency-select-box span {
+        font-weight: 700;
+        color: var(--text-primary);
+        flex: 1;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 110%;
+        left: 0;
+        width: 100%;
+        max-height: 260px;
+        overflow-y: auto;
+        z-index: 100;
+        display: none;
+        padding: 10px;
+        background: var(--card-bg);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        box-shadow: var(--glass-shadow);
+    }
+
+    .dropdown-menu.show {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .dropdown-search {
+        width: 100%;
+        padding: 10px 14px;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 10px;
+        color: var(--text-primary);
+        outline: none;
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(56, 189, 248, 0.2);
+    }
+
+    .swap-btn {
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        color: var(--accent-color);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-top: 22px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .swap-btn:hover {
+        transform: rotate(180deg) scale(1.1);
+        background: var(--accent-color);
+        color: #fff;
+        box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .btn-convert {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 14px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 24px;
+        box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+        letter-spacing: 0.5px;
+    }
+
+    .btn-convert:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(14, 165, 233, 0.6);
+    }
+
+    .result-box {
+        margin-top: 24px;
+        padding: 22px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid var(--success-color);
+        border-radius: 16px;
+        text-align: center;
+        display: none;
+        animation: fadeIn 0.4s ease;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .result-main {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--success-color);
+    }
+
+    .rate-info {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-top: 8px;
+    }
+
+    /* Metal Cards Styling */
+    .metal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+    }
+
+    .metal-card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--card-border);
+        padding: 22px;
+        border-radius: 18px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .metal-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .metal-card.gold-card {
+        border-color: rgba(245, 158, 11, 0.4);
+        box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.05);
+    }
+
+    .metal-card.silver-card {
+        border-color: rgba(203, 213, 225, 0.4);
+        box-shadow: inset 0 0 20px rgba(203, 213, 225, 0.05);
+    }
+
+    .metal-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .metal-price {
+        font-size: 26px;
+        font-weight: 800;
+        margin: 10px 0;
+    }
+
+    /* Crypto Table Redesign */
+    .table-wrapper {
+        overflow-x: auto;
+        margin-top: 18px;
+        border-radius: 14px;
+        border: 1px solid var(--card-border);
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .custom-table th, .custom-table td {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    .custom-table th {
+        color: var(--text-secondary);
+        font-weight: 700;
+        background: rgba(15, 23, 42, 0.7);
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .badge-green { color: #10b981; font-weight: 700; }
+    .badge-red { color: #ef4444; font-weight: 700; }
+
+    /* AI Assistant Chat */
+    .chat-box {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid var(--input-border);
+        border-radius: 16px;
+        padding: 18px;
+        background: var(--input-bg);
+        margin-bottom: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .chat-msg {
+        max-width: 80%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.6;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .msg-ai {
+        background: rgba(56, 189, 248, 0.18);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+    }
+
+    .msg-user {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+    }
+
+    .chat-input-wrapper {
+        display: flex;
+        gap: 12px;
+    }
+
+    /* News & SEO Cards Hover effects */
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+    }
+
+    .news-card {
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        padding: 20px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease;
+    }
+
+    .news-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-color);
+    }
+
+    .news-card h4 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+    }
+
+    .news-card p {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        line-height: 1.5;
+    }
+
+    .seo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-top: 20px;
+    }
+
+    .seo-card {
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        padding: 16px;
+        border-radius: 14px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .seo-card:hover {
+        border-color: var(--accent-color);
+        transform: scale(1.04);
+        box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Footer styling */
+    footer {
+        background: var(--footer-bg);
+        border-top: 1px solid var(--card-border);
+        color: #94a3b8;
+        padding: 50px 6% 25px;
+        margin-top: auto;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-logo {
+        font-size: 20px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-links h4, .footer-contact h4 {
+        color: #f8fafc;
+        margin-bottom: 14px;
+        font-size: 16px;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--accent-color);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 13px;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        header { padding: 0 5%; }
+        .hamburger { display: block; }
+        nav {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 75px;
+            left: -100%;
             width: 100%;
-            height: 75px;
+            height: calc(100vh - 75px);
             background: var(--header-bg);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-            z-index: 1000;
-            border-bottom: 1px solid var(--card-border);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        header.nav-hidden {
-            transform: translateY(-100%);
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .logo i {
-            font-size: 24px;
-            background: linear-gradient(45deg, #0284c7, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 15px;
-            align-items: center;
-        }
-
-        nav a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            position: relative;
-            padding: 5px 0;
-            white-space: nowrap;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Services Dropdown */
-        .dropdown-nav {
-            position: relative;
-        }
-
-        .dropdown-nav-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 10px 0;
-            min-width: 210px;
-            display: none;
-            box-shadow: var(--glass-shadow);
-            z-index: 1001;
-        }
-
-        .dropdown-nav:hover .dropdown-nav-menu {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
-
-        .dropdown-nav-menu a {
-            display: block;
-            padding: 10px 18px;
-            font-size: 13px;
-        }
-
-        .dropdown-nav-menu a:hover {
-            background: rgba(56, 189, 248, 0.15);
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .theme-toggle-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--card-border);
-            color: var(--text-primary);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        .theme-toggle-btn:hover {
-            transform: rotate(15deg);
-        }
-
-        .btn-auth {
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
-            color: #ffffff !important;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 700 !important;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
-        }
-
-        .btn-auth:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 22px;
-            color: var(--text-primary);
-        }
-
-        /* Layout & Wrapper */
-        .page-wrapper {
-            flex: 1;
-            padding-top: 100px;
-            padding-bottom: 60px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .hero-banner {
-            text-align: center;
-            padding: 20px 20px 30px;
-            animation: fadeInDown 0.8s ease;
-        }
-
-        .hero-banner h1 {
-            font-size: 40px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .hero-banner p {
-            font-size: 17px;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        /* Services Grid Shortcuts */
-        .services-shortcuts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .service-chip {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 12px 10px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text-primary);
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
+            backdrop-filter: blur(25px);
             flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .service-chip:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-color);
-            background: rgba(56, 189, 248, 0.1);
-        }
-
-        .service-chip i {
-            font-size: 18px;
-            color: var(--accent-color);
-        }
-
-        /* Cards Styling */
-        .card {
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .card:hover {
-            transform: translateY(var(--card-hover-y));
-        }
-
-        .card h2 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card h2 i {
-            color: var(--accent-color);
-        }
-
-        .converter-grid {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 15px;
-            align-items: center;
-            margin-top: 15px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .input-group label {
-            font-weight: 600;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 12px 14px;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 10px;
-            font-size: 15px;
-            color: var(--text-primary);
-            outline: none;
-        }
-
-        .input-group input:focus, .input-group select:focus {
-            border-color: var(--accent-color);
-        }
-
-        .currency-select-wrapper {
-            position: relative;
-        }
-
-        .currency-select-box {
-            display: flex;
-            align-items: center;
-            padding: 10px 14px;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 10px;
-            cursor: pointer;
-            gap: 10px;
-        }
-
-        .currency-select-box img {
-            width: 28px;
-            height: 18px;
-            object-fit: cover;
-            border-radius: 3px;
-        }
-
-        .currency-select-box span {
-            font-weight: 600;
-            color: var(--text-primary);
-            flex: 1;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 105%;
-            left: 0;
-            width: 100%;
-            max-height: 240px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-            padding: 8px;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            box-shadow: var(--glass-shadow);
-        }
-
-        .dropdown-menu.show {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
-
-        .dropdown-search {
-            width: 100%;
-            padding: 8px 12px;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            outline: none;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(56, 189, 248, 0.15);
-        }
-
-        .dropdown-item img {
-            width: 22px;
-            height: 15px;
-            object-fit: cover;
-            border-radius: 2px;
-        }
-
-        .swap-btn {
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            color: var(--accent-color);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .swap-btn:hover {
-            transform: rotate(180deg);
-            background: var(--accent-color);
-            color: #fff;
-        }
-
-        .btn-convert {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 15px;
-            font-weight: 700;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
-        }
-
-        .btn-convert:hover {
-            opacity: 0.95;
-            transform: translateY(-2px);
-        }
-
-        .result-box {
-            margin-top: 20px;
-            padding: 18px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--success-color);
-            border-radius: 12px;
-            text-align: center;
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .result-main {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--success-color);
-        }
-
-        .rate-info {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 6px;
-        }
-
-        /* Gold & Silver Section */
-        .metal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .metal-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid var(--card-border);
-            padding: 18px;
-            border-radius: 14px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .metal-card.gold-card { border-color: rgba(245, 158, 11, 0.4); }
-        .metal-card.silver-card { border-color: rgba(203, 213, 225, 0.4); }
-
-        .metal-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .metal-price {
-            font-size: 24px;
-            font-weight: 800;
-            margin: 8px 0;
-        }
-
-        /* Crypto Tracker Table */
-        .table-wrapper {
-            overflow-x: auto;
-            margin-top: 15px;
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        .custom-table th, .custom-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .custom-table th {
-            color: var(--text-secondary);
-            font-weight: 600;
-            background: rgba(15, 23, 42, 0.4);
-        }
-
-        .badge-green { color: #10b981; font-weight: 700; }
-        .badge-red { color: #ef4444; font-weight: 700; }
-
-        /* AI Assistant Chat */
-        .chat-box {
-            height: 280px;
-            overflow-y: auto;
-            border: 1px solid var(--input-border);
-            border-radius: 12px;
-            padding: 15px;
-            background: var(--input-bg);
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat-msg {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .msg-ai {
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
-
-        .msg-user {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        .chat-input-wrapper {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Forex News Cards */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .news-card {
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .news-card h4 {
-            font-size: 15px;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-
-        .news-card p {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .news-meta {
-            font-size: 11px;
-            color: var(--accent-color);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* SEO Currency Grid */
-        .seo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .seo-card {
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .seo-card:hover {
-            border-color: var(--accent-color);
-            transform: scale(1.02);
-        }
-
-        .seo-card strong {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .seo-card span {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        /* Loading Spinner */
-        .loader {
-            display: none;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-radius: 50%;
-            border-top: 3px solid var(--accent-color);
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        textarea {
-            width: 100%;
-            padding: 12px;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 10px;
-            height: 100px;
-            resize: none;
-            color: var(--text-primary);
-            outline: none;
-        }
-
-        .info-detail {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .info-detail i {
-            color: var(--accent-color);
-            margin-right: 8px;
-        }
-
-        .auth-bg {
-            min-height: calc(100vh - 170px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .auth-card {
-            width: 100%;
-            max-width: 420px;
-            padding: 35px;
-        }
-
-        .auth-card h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .auth-toggle {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .auth-toggle a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .page-view {
-            display: none;
-        }
-
-        .page-view.active {
-            display: block;
-        }
-
-        footer {
-            background: var(--footer-bg);
-            border-top: 1px solid var(--card-border);
-            color: #94a3b8;
-            padding: 40px 5% 20px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-logo {
-            font-size: 18px;
-            font-weight: 800;
-            color: #f8fafc;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .footer-links h4, .footer-contact h4 {
-            color: #f8fafc;
-            margin-bottom: 12px;
-            font-size: 15px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 13px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 0 4%;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            nav {
-                position: fixed;
-                top: 75px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 75px);
-                background: var(--header-bg);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: flex-start;
-                padding-top: 30px;
-                transition: left 0.3s ease;
-                overflow-y: auto;
-            }
-
-            nav.mobile-active {
-                left: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 20px;
-                width: 100%;
-                text-align: center;
-            }
-
-            .dropdown-nav-menu {
-                position: relative;
-                box-shadow: none;
-                border: none;
-                background: rgba(0,0,0,0.2);
-                margin: 5px auto;
-                width: 80%;
-            }
-
-            .converter-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .swap-btn {
-                margin: 0 auto;
-                transform: rotate(90deg);
-            }
-
-            .swap-btn:hover {
-                transform: rotate(270deg);
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-banner h1 {
-                font-size: 28px;
-            }
-        }
-    </style>
+            justify-content: flex-start;
+            padding-top: 40px;
+            transition: left 0.3s ease;
+        }
+        nav.mobile-active { left: 0; }
+        nav ul { flex-direction: column; gap: 24px; width: 100%; }
+        .converter-grid { grid-template-columns: 1fr; }
+        .swap-btn { margin: 0 auto; transform: rotate(90deg); }
+        .swap-btn:hover { transform: rotate(270deg); }
+        .footer-content { grid-template-columns: 1fr; }
+        .hero-banner h1 { font-size: 32px; }
+    }
+</style>
 </head>
 <body>
 
@@ -934,7 +841,7 @@
     <header id="main-header">
         <a class="logo" onclick="scrollToSection('hero-sec')">
             <i class="fa-solid fa-coins"></i>
-            <span>World Currency</span>
+        <span>World Currency</span>
         </a>
 
         <nav id="nav-menu">
@@ -1034,7 +941,7 @@
                     <div class="converter-grid">
                         <!-- From Currency -->
                         <div class="input-group">
-                            <label>From</label>
+                      <label>From</label>
                             <div class="currency-select-wrapper">
                                 <div class="currency-select-box" onclick="toggleDropdown('from-dropdown')">
                                     <img id="from-flag" src="https://flagcdn.com/w40/eu.png" alt="flag">
@@ -1460,11 +1367,11 @@
             <div class="footer-links">
                 <h4>Quick Navigation</h4>
                 <ul>
-                    <li><a onclick="scrollToSection('hero-sec')">Home</a></li>
-                    <li><a onclick="scrollToSection('converter-sec')">Converter</a></li>
-                    <li><a onclick="scrollToSection('metals-sec')">Gold & Silver</a></li>
-                    <li><a onclick="scrollToSection('crypto-sec')">Crypto Tracker</a></li>
-                    <li><a onclick="scrollToSection('contact-sec')">Contact</a></li>
+                   <li><a onclick="scrollToSection('hero-sec')">Home</a></li>
+                  <li><a onclick="scrollToSection('converter-sec')">Converter</a></li>
+                  <li><a onclick="scrollToSection('metals-sec')">Gold & Silver</a></li>
+                   <li><a onclick="scrollToSection('crypto-sec')">Crypto Tracker</a></li>
+                   <li><a onclick="scrollToSection('contact-sec')">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
@@ -1478,628 +1385,123 @@
         </div>
     </footer>
 
-    <!-- JavaScript Script Code -->
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- JavaScript Link -->
+    <script src="script.js"></script>
+
+    <!-- 3D Animation Code -->
     <script>
-        // Currency to Country mapping table
-        const countryList = {
-            "AED": "AE", "AFN": "AF", "XCD": "AG", "ALL": "AL", "AMD": "AM", "ANG": "CW", "AOA": "AO", "AQD": "AQ", "ARS": "AR",
-            "AUD": "AU", "AZN": "AZ", "BAM": "BA", "BBD": "BB", "BDT": "BD", "XOF": "BE", "BGN": "BG", "BHD": "BH", "BIF": "BI",
-            "BMD": "BM", "BND": "BN", "BOB": "BO", "BRL": "BR", "BSD": "BS", "NOK": "BV", "BWP": "BW", "BYN": "BY", "BZD": "BZ",
-            "CAD": "CA", "CDF": "CD", "XAF": "CF", "CHF": "CH", "CLP": "CL", "CNY": "CN", "COP": "CO", "CRC": "CR", "CUP": "CU",
-            "CVE": "CV", "CYP": "CY", "CZK": "CZ", "DJF": "DJ", "DKK": "DK", "DOP": "DO", "DZD": "DZ", "EGP": "EG", "MAD": "EH",
-            "ERN": "ER", "ETB": "ET", "EUR": "FR", "FJD": "FJ", "FKP": "FK", "GBP": "GB", "GEL": "GE", "GHS": "GH", "GIP": "GI",
-            "GMD": "GM", "GNF": "GN", "GTQ": "GT", "GYD": "GY", "HKD": "HK", "HNL": "HN", "HRK": "HR", "HTG": "HT", "HUF": "HU",
-            "IDR": "ID", "ILS": "IL", "INR": "IN", "IQD": "IQ", "IRR": "IR", "ISK": "IS", "JMD": "JM", "JOD": "JO", "JPY": "JP",
-            "KES": "KE", "KGS": "KG", "KHR": "KH", "KMF": "KM", "KPW": "KP", "KRW": "KR", "KWD": "KW", "KYD": "KY", "KZT": "KZ",
-            "LAK": "LA", "LBP": "LB", "LKR": "LK", "LRD": "LR", "LSL": "LS", "LTL": "LT", "LVL": "LV", "LYD": "LY", "MDL": "MD",
-            "MGA": "MG", "MKD": "MK", "MMK": "MM", "MNT": "MN", "MOP": "MO", "MRO": "MR", "MUR": "MU", "MVR": "MV", "MWK": "MW",
-            "MXN": "MX", "MYR": "MY", "MZN": "MZ", "NAD": "NA", "XPF": "NC", "NGN": "NG", "NIO": "NI", "NPR": "NP", "NZD": "NZ",
-            "OMR": "OM", "PAB": "PA", "PEN": "PE", "PGK": "PG", "PHP": "PH", "PKR": "PK", "PLN": "PL", "PYG": "PY", "QAR": "QA",
-            "RON": "RO", "RSD": "RS", "RUB": "RU", "RWF": "RW", "SAR": "SA", "SBD": "SB", "SCR": "SC", "SDG": "SD", "SEK": "SE",
-            "SGD": "SG", "SKK": "SK", "SLL": "SL", "SOS": "SO", "SRD": "SR", "STD": "ST", "SVC": "SV", "SYP": "SY", "SZL": "SZ",
-            "THB": "TH", "TJS": "TJ", "TMT": "TM", "TND": "TN", "TOP": "TO", "TRY": "TR", "TTD": "TT", "TWD": "TW", "TZS": "TZ",
-            "UAH": "UA", "UGX": "UG", "USD": "US", "UYU": "UY", "UZS": "UZ", "VEF": "VE", "VND": "VN", "VUV": "VU", "YER": "YE",
-            "ZAR": "ZA", "ZMK": "ZM", "ZWD": "ZW"
-        };
+        // 1. Scene Setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-        // Unit Converter Definitions
-        const unitData = {
-            length: {
-                Meter: 1, Kilometer: 0.001, Centimeter: 100, Millimeter: 1000,
-                Mile: 0.000621371, Yard: 1.09361, Foot: 3.28084, Inch: 39.3701
-            },
-            weight: {
-                Kilogram: 1, Gram: 1000, Milligram: 1000000,
-                Pound: 2.20462, Ounce: 35.274, Tola: 85.735
-            },
-            temp: { Celsius: 'C', Fahrenheit: 'F', Kelvin: 'K' },
-            area: {
-                SquareMeter: 1, SquareFoot: 10.7639, Acre: 0.000247105, Hectare: 0.0001, Marla: 0.0395369
-            }
-        };
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        let currentUnitCategory = 'length';
-        let chartInstance = null;
-        let selectedFromCurr = "EUR";
-        let selectedToCurr = "PKR";
-        let lastScrollTop = 0;
-        const header = document.getElementById('main-header');
+        const container = document.body;
+        renderer.domElement.style.position = 'fixed';
+        renderer.domElement.style.top = '0';
+        renderer.domElement.style.left = '0';
+        renderer.domElement.style.width = '100vw';
+        renderer.domElement.style.height = '100vh';
+        renderer.domElement.style.zIndex = '-1';
+        container.prepend(renderer.domElement);
+        renderer.domElement.style.pointerEvents = 'none';
 
-        // Scroll auto hide navbar
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > 80) {
-                header.classList.add('nav-hidden');
-            } else {
-                header.classList.remove('nav-hidden');
-            }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+container.prepend(renderer.domElement);
+
+        // 2. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        // 3. Interactive Particle Background
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 2000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.005,
+            color: 0x38bdf8,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
         });
 
-        // Theme Toggle
-        function toggleTheme() {
-            const htmlTag = document.documentElement;
-            const themeBtnIcon = document.querySelector('#theme-btn i');
-            if (htmlTag.getAttribute('data-theme') === 'dark') {
-                htmlTag.setAttribute('data-theme', 'light');
-                themeBtnIcon.className = 'fa-solid fa-sun';
-            } else {
-                htmlTag.setAttribute('data-theme', 'dark');
-                themeBtnIcon.className = 'fa-solid fa-moon';
-            }
-        }
-
-        // Mobile Menu
-        function toggleMobileMenu() {
-            const nav = document.getElementById('nav-menu');
-            const icon = document.getElementById('menu-icon');
-            nav.classList.toggle('mobile-active');
-            if (nav.classList.contains('mobile-active')) {
-                icon.className = 'fa-solid fa-xmark';
-            } else {
-                icon.className = 'fa-solid fa-bars';
-            }
-        }
-
-        // Dropdown builder
-        function buildDropdownLists() {
-            const fromList = document.getElementById('from-list');
-            const toList = document.getElementById('to-list');
-            fromList.innerHTML = '';
-            toList.innerHTML = '';
-
-            for (let code in countryList) {
-                let country = countryList[code];
-                let flagUrl = `https://flagcdn.com/w40/${country.toLowerCase()}.png`;
-
-                let itemHtmlFrom = `
-                    <div class="dropdown-item" onclick="selectCurrency('${code}', 'from')">
-                        <img src="${flagUrl}" alt="${code}">
-                        <span>${code}</span>
-                    </div>`;
-
-                let itemHtmlTo = `
-                    <div class="dropdown-item" onclick="selectCurrency('${code}', 'to')">
-                        <img src="${flagUrl}" alt="${code}">
-                        <span>${code}</span>
-                    </div>`;
-
-                fromList.insertAdjacentHTML('beforeend', itemHtmlFrom);
-                toList.insertAdjacentHTML('beforeend', itemHtmlTo);
-            }
-        }
-
-        function toggleDropdown(id) {
-            const menu = document.getElementById(id);
-            const isVisible = menu.classList.contains('show');
-            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
-            if (!isVisible) menu.classList.add('show');
-        }
-
-        function filterCurrencies(input, listId) {
-            const filter = input.value.toUpperCase();
-            const items = document.getElementById(listId).getElementsByClassName('dropdown-item');
-            for (let i = 0; i < items.length; i++) {
-                let txtValue = items[i].textContent || items[i].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    items[i].style.display = "";
-                } else {
-                    items[i].style.display = "none";
-                }
-            }
-        }
-
-        function selectCurrency(code, type) {
-            let country = countryList[code];
-            let flagUrl = `https://flagcdn.com/w40/${country.toLowerCase()}.png`;
-
-            if (type === 'from') {
-                selectedFromCurr = code;
-                document.getElementById('from-code').innerText = code;
-                document.getElementById('from-flag').src = flagUrl;
-                document.getElementById('from-dropdown').classList.remove('show');
-            } else {
-                selectedToCurr = code;
-                document.getElementById('to-code').innerText = code;
-                document.getElementById('to-flag').src = flagUrl;
-                document.getElementById('to-dropdown').classList.remove('show');
-            }
-        }
-
-        function swapCurrencies() {
-            let temp = selectedFromCurr;
-            selectCurrency(selectedToCurr, 'from');
-            selectCurrency(temp, 'to');
-        }
-
-        window.onclick = function(e) {
-            if (!e.target.closest('.currency-select-wrapper')) {
-                document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
-            }
-        };
-
-        // ⭐ Simple API Cache Helper (reduces API calls, gives offline fallback)
-        const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-        async function cachedFetch(cacheKey, url) {
-            try {
-                const cached = JSON.parse(localStorage.getItem(cacheKey));
-                if (cached && (Date.now() - cached.time) < CACHE_TTL) {
-                    return cached.data;
-                }
-            } catch (e) { /* ignore corrupt cache */ }
-
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`API responded with status ${res.status}`);
-            const data = await res.json();
-            try {
-                localStorage.setItem(cacheKey, JSON.stringify({ time: Date.now(), data }));
-            } catch (e) { /* storage full/unavailable, skip caching */ }
-            return data;
-        }
-
-        // Realtime Currency API
-        async function convertCurrency() {
-            const amountInput = document.getElementById('amount').value;
-            const resultBox = document.getElementById('result');
-            const resultText = document.getElementById('result-text');
-            const rateUpdate = document.getElementById('rate-update');
-            const loader = document.getElementById('loader');
-
-            if (amountInput === "" || amountInput <= 0) return;
-
-            resultBox.style.display = "none";
-            loader.style.display = "block";
-
-            try {
-                let url = `https://open.er-api.com/v6/latest/${selectedFromCurr}`;
-                let data = await cachedFetch(`rate_${selectedFromCurr}`, url);
-                let rate = data.rates[selectedToCurr];
-                if (!rate) throw new Error("Currency pair not supported");
-                let total = (amountInput * rate).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                let lastUpdated = data.time_last_update_utc ? data.time_last_update_utc.substring(0, 16) : "Just Now";
-
-                loader.style.display = "none";
-                resultBox.style.display = "block";
-                resultText.innerText = `${amountInput} ${selectedFromCurr} = ${total} ${selectedToCurr}`;
-                rateUpdate.innerText = `1 ${selectedFromCurr} = ${rate.toFixed(4)} ${selectedToCurr} • Last Updated: ${lastUpdated}`;
-            } catch (error) {
-                loader.style.display = "none";
-                resultBox.style.display = "block";
-                resultText.innerText = "Couldn't fetch live rate.";
-                rateUpdate.innerText = "Check your internet connection and try again.";
-            }
-        }
-
-        // ⭐ Gold & Silver Rates Calculation
-        async function fetchPreciousMetals() {
-            const baseCurr = document.getElementById('metal-currency').value;
-            try {
-                let data = await cachedFetch('rate_USD', `https://open.er-api.com/v6/latest/USD`);
-                let usdToSelected = data.rates[baseCurr] || 1;
-
-                // Standard international base benchmark prices approx
-                let goldUsdOz = 2380.50; // USD per oz
-                let silverUsdOz = 28.40;  // USD per oz
-
-                let goldSelectedOz = goldUsdOz * usdToSelected;
-                let silverSelectedOz = silverUsdOz * usdToSelected;
-
-                // 1 Oz = 31.1035 Grams, 1 Tola = 11.6638 Grams
-                let goldPerGram = goldSelectedOz / 31.1035;
-                let goldPerTola = goldPerGram * 11.6638;
-
-                let silverPerGram = silverSelectedOz / 31.1035;
-                let silverPerTola = silverPerGram * 11.6638;
-
-                document.getElementById('gold-tola-price').innerText = `${baseCurr} ${Math.round(goldPerTola).toLocaleString()}`;
-                document.getElementById('gold-gram-price').innerText = `${baseCurr} ${Math.round(goldPerGram).toLocaleString()}`;
-                document.getElementById('gold-10g-price').innerText = `${baseCurr} ${Math.round(goldPerGram * 10).toLocaleString()}`;
-                document.getElementById('gold-oz-sub').innerText = `Per Oz: ${baseCurr} ${Math.round(goldSelectedOz).toLocaleString()}`;
-
-                document.getElementById('silver-tola-price').innerText = `${baseCurr} ${Math.round(silverPerTola).toLocaleString()}`;
-                document.getElementById('silver-oz-sub').innerText = `Per Oz: ${baseCurr} ${Math.round(silverSelectedOz).toLocaleString()}`;
-            } catch (e) {
-                ['gold-tola-price', 'gold-gram-price', 'gold-10g-price', 'silver-tola-price'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.innerText = "Unavailable";
-                });
-                document.getElementById('gold-oz-sub').innerText = "Live data unavailable — check connection";
-                document.getElementById('silver-oz-sub').innerText = "Live data unavailable";
-            }
-        }
-
-        // ⭐ Crypto Price Tracker
-        async function fetchCryptoPrices() {
-            const tbody = document.getElementById('crypto-table-body');
-            try {
-                let data = await cachedFetch('crypto_prices', 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano&vs_currencies=usd&include_24hr_change=true&include_market_cap=true');
-
-                const cryptos = [
-                    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
-                    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
-                    { id: 'binancecoin', symbol: 'BNB', name: 'BNB' },
-                    { id: 'solana', symbol: 'SOL', name: 'Solana' },
-                    { id: 'ripple', symbol: 'XRP', name: 'XRP' },
-                    { id: 'cardano', symbol: 'ADA', name: 'Cardano' }
-                ];
-
-                tbody.innerHTML = '';
-                cryptos.forEach(c => {
-                    let coin = data[c.id];
-                    if (!coin) return;
-                    let price = coin.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-                    let change = coin.usd_24h_change ? coin.usd_24h_change.toFixed(2) : 0;
-                    let changeClass = change >= 0 ? 'badge-green' : 'badge-red';
-                    let changeSign = change >= 0 ? '+' : '';
-                    let mcap = (coin.usd_market_cap / 1e9).toFixed(2) + ' B';
-
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><strong>${c.name}</strong> <span style="font-size:11px; color:var(--text-secondary);">${c.symbol}</span></td>
-                            <td>${price}</td>
-                            <td class="${changeClass}">${changeSign}${change}%</td>
-                            <td>$${mcap}</td>
-                        </tr>`;
-                });
-            } catch (e) {
-                tbody.innerHTML = `
-                    <tr><td colspan="4" style="text-align:center; color:var(--text-secondary); padding:20px;">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Live crypto prices unavailable right now. Please try again shortly.
-                    </td></tr>`;
-            }
-        }
-
-        // ⭐ Exchange Rate Charts
-        function renderCurrencyChart() {
-            const ctx = document.getElementById('rateHistoryChart').getContext('2d');
-            const pair = document.getElementById('chart-pair').value;
-            const timeframe = document.getElementById('chart-timeframe').value;
-
-            let labels = [];
-            let dataPoints = [];
-            let count = timeframe === '7D' ? 7 : (timeframe === '30D' ? 30 : 12);
-
-            let baseVal = pair === 'USD-PKR' ? 278.5 : (pair === 'EUR-PKR' ? 302.1 : (pair === 'GBP-PKR' ? 355.4 : (pair === 'SAR-PKR' ? 74.2 : 1.08)));
-
-            for (let i = count; i >= 1; i--) {
-                labels.push(timeframe === '1Y' ? `Month ${13-i}` : `Day ${count-i+1}`);
-                let variation = (Math.random() - 0.48) * (baseVal * 0.015);
-                dataPoints.push((baseVal + variation).toFixed(2));
-            }
-
-            if (chartInstance) chartInstance.destroy();
-
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: `${pair} Exchange Rate`,
-                        data: dataPoints,
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#94a3b8' } } },
-                    scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
-                    }
-                }
-            });
-        }
-
-        // ⭐ Unit Converter Logic
-        function setUnitCategory(cat) {
-            currentUnitCategory = cat;
-            const fromSelect = document.getElementById('unit-from-type');
-            const toSelect = document.getElementById('unit-to-type');
-            fromSelect.innerHTML = '';
-            toSelect.innerHTML = '';
-
-            const keys = Object.keys(unitData[cat]);
-            keys.forEach((unit, idx) => {
-                fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
-                toSelect.innerHTML += `<option value="${unit}" ${idx===1?'selected':''}>${unit}</option>`;
-            });
-
-            calculateUnitConversion();
-        }
-
-        function calculateUnitConversion() {
-            const val = parseFloat(document.getElementById('unit-from-val').value) || 0;
-            const from = document.getElementById('unit-from-type').value;
-            const to = document.getElementById('unit-to-type').value;
-
-            if (currentUnitCategory === 'temp') {
-                let celsius = val;
-                if (from === 'Fahrenheit') celsius = (val - 32) * 5 / 9;
-                else if (from === 'Kelvin') celsius = val - 273.15;
-
-                let res = celsius;
-                if (to === 'Fahrenheit') res = (celsius * 9 / 5) + 32;
-                else if (to === 'Kelvin') res = celsius + 273.15;
-
-                document.getElementById('unit-to-val').value = res.toFixed(2);
-                return;
-            }
-
-            const rates = unitData[currentUnitCategory];
-            if (!rates[from] || !rates[to]) return;
-
-            let inBase = val / rates[from];
-            let result = inBase * rates[to];
-            document.getElementById('unit-to-val').value = result.toFixed(4);
-        }
-
-        // ⭐ Loan EMI Calculator
-        function calculateEMI() {
-            const p = parseFloat(document.getElementById('emi-amount').value) || 0;
-            const r = (parseFloat(document.getElementById('emi-rate').value) || 0) / 12 / 100;
-            const n = (parseFloat(document.getElementById('emi-tenure').value) || 0) * 12;
-
-            if (p <= 0 || r <= 0 || n <= 0) return;
-
-            const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-            const totalPayment = emi * n;
-            const totalInterest = totalPayment - p;
-
-            document.getElementById('emi-monthly').innerText = Math.round(emi).toLocaleString();
-            document.getElementById('emi-total-interest').innerText = Math.round(totalInterest).toLocaleString();
-            document.getElementById('emi-total-pay').innerText = Math.round(totalPayment).toLocaleString();
-        }
-
-        // ⭐ Tax Calculator
-        function calculateTax() {
-            const income = parseFloat(document.getElementById('tax-income').value) || 0;
-            const rule = document.getElementById('tax-rule').value;
-
-            let monthlyTax = 0;
-            let annualIncome = income * 12;
-
-            if (rule === 'PKR') {
-                // Approximate Pakistan Salary Slabs
-                if (annualIncome > 600000 && annualIncome <= 1200000) {
-                    monthlyTax = ((annualIncome - 600000) * 0.025) / 12;
-                } else if (annualIncome > 1200000 && annualIncome <= 2400000) {
-                    monthlyTax = (15000 + (annualIncome - 1200000) * 0.125) / 12;
-                } else if (annualIncome > 2400000) {
-                    monthlyTax = (165000 + (annualIncome - 2400000) * 0.225) / 12;
-                }
-            } else {
-                monthlyTax = income * 0.10;
-            }
-
-            let takeHome = income - monthlyTax;
-            document.getElementById('tax-monthly').innerText = Math.round(monthlyTax).toLocaleString();
-            document.getElementById('tax-annual').innerText = Math.round(monthlyTax * 12).toLocaleString();
-            document.getElementById('tax-takehome').innerText = Math.round(takeHome).toLocaleString();
-        }
-
-        // ⭐ AI Assistant Chat
-        function sendAiMessage() {
-            const input = document.getElementById('chat-input');
-            const chatBox = document.getElementById('chat-box');
-            const q = input.value.trim();
-            if (!q) return;
-
-            chatBox.innerHTML += `<div class="chat-msg msg-user">${q}</div>`;
-            input.value = '';
-
-            setTimeout(() => {
-                let reply = "I can assist you with foreign exchange calculations, gold bullion prices, tax estimates, or currency trends.";
-                let lower = q.toLowerCase();
-
-                if (lower.includes('usd') || lower.includes('dollar') || lower.includes('pkr')) {
-                    reply = "USD to PKR exchange rates fluctuate based on state bank reserves and foreign trade balances. Currently trading around ~278 PKR.";
-                } else if (lower.includes('gold') || lower.includes('silver')) {
-                    reply = "Gold prices are calculated based on international troy ounce spot rates, converted into grams or tola (11.66g) plus local duty rates.";
-                } else if (lower.includes('tax') || lower.includes('salary')) {
-                    reply = "Use our Tax Calculator section above to get an exact breakdown of your monthly income tax deduction and net salary.";
-                } else if (lower.includes('convert') || lower.includes('how')) {
-                    reply = "Select your desired 'From' and 'To' currencies in our Converter section above and click 'Convert Currency' for instant live results!";
-                }
-
-                chatBox.innerHTML += `<div class="chat-msg msg-ai">${reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
-        }
-
-        // ⭐ Forex News Feed
-        function loadForexNews() {
-            const newsContainer = document.getElementById('news-container');
-            const newsItems = [
-                {
-                    title: "Central Banks Signal Rate Adjustment Trends",
-                    desc: "Global foreign exchange markets react as central banks discuss monetary policy and inflation benchmarks.",
-                    source: "Global Forex Desk", time: "10 mins ago"
-                },
-                {
-                    title: "Gold Holds Firm Amid Foreign Currency Volatility",
-                    desc: "Bullion spot prices stay resilient as investors balance safe-haven demand against dollar strength.",
-                    source: "Commodity Watch", time: "45 mins ago"
-                },
-                {
-                    title: "Asian & European Currency Pairs Show Steady Momentum",
-                    desc: "Key trading pairs including EUR/USD and GBP/PKR show steady volume across international exchanges.",
-                    source: "Market Insights", time: "2 hours ago"
-                }
-            ];
-
-            newsContainer.innerHTML = '';
-            newsItems.forEach(item => {
-                newsContainer.innerHTML += `
-                    <div class="news-card">
-                        <h4>${item.title}</h4>
-                        <p>${item.desc}</p>
-                        <div class="news-meta">
-                            <span><i class="fa-solid fa-newspaper"></i> ${item.source}</span>
-                            <span>${item.time}</span>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        // ⭐ SEO Quick Conversion Action
-        function quickConvert(from, to) {
-            selectCurrency(from, 'from');
-            selectCurrency(to, 'to');
-            scrollToSection('converter-sec');
-            convertCurrency();
-        }
-
-        // Scroll & View Handlers
-        function scrollToSection(secId) {
-            showView('home-view');
-            const nav = document.getElementById('nav-menu');
-            if(nav.classList.contains('mobile-active')) toggleMobileMenu();
-            setTimeout(() => {
-                const el = document.getElementById(secId);
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
-
-        function showView(viewId) {
-            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        function showAuthPage(type) {
-            if (type === 'login') showView('login-view');
-            else if (type === 'signup') showView('signup-view');
-            else if (type === 'logout') {
-                const displayUser = document.getElementById('display-logout-user');
-                displayUser.textContent = currentUser ? currentUser.username : "";
-                showView('logout-view');
-            }
-        }
-
-        // Authentication State Logic
-        let currentUser = JSON.parse(localStorage.getItem('logged_user')) || null;
-
-        function checkAuthStatus() {
-            const authNavItem = document.getElementById('auth-nav-item');
-            if (currentUser) {
-                authNavItem.innerHTML = `<a class="btn-auth" style="background:linear-gradient(135deg, #ef4444, #dc2626);" onclick="showAuthPage('logout')">Logout</a>`;
-            } else {
-                authNavItem.innerHTML = `<a class="btn-auth" onclick="showAuthPage('login')">Login</a>`;
-            }
-        }
-
-        // ⭐ Password hashing (SHA-256) — plain-text passwords should never be stored,
-        // even in localStorage-only demos. NOTE: this still isn't production-grade auth;
-        // a real deployment needs a backend with salted hashing (bcrypt/argon2) and HTTPS.
-        async function hashPassword(password) {
-            const encoded = new TextEncoder().encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
-            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        async function handleSignup(e) {
-            e.preventDefault();
-            const username = document.getElementById('signup-username').value.trim();
-            if (localStorage.getItem(`user_${username}`)) {
-                alert("Username already exists. Please choose another.");
-                return;
-            }
-            const user = {
-                fullName: document.getElementById('signup-fullname').value,
-                email: document.getElementById('signup-email').value,
-                username: username,
-                passwordHash: await hashPassword(document.getElementById('signup-password').value)
-            };
-            localStorage.setItem(`user_${user.username}`, JSON.stringify(user));
-            alert("Account registered successfully! Please login.");
-            showAuthPage('login');
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const uname = document.getElementById('login-username').value.trim();
-            const pass = document.getElementById('login-password').value;
-            const storedUser = JSON.parse(localStorage.getItem(`user_${uname}`));
-            const passHash = await hashPassword(pass);
-
-            if (storedUser && storedUser.passwordHash === passHash) {
-                currentUser = storedUser;
-                localStorage.setItem('logged_user', JSON.stringify(currentUser));
-                checkAuthStatus();
-                alert(`Welcome back, ${currentUser.fullName}!`);
-                showView('home-view');
-            } else {
-                alert("Invalid username or password credentials!");
-            }
-        }
-
-        async function handleLogout(e) {
-            e.preventDefault();
-            const uname = document.getElementById('logout-username').value.trim();
-            const pass = document.getElementById('logout-password').value;
-            const passHash = await hashPassword(pass);
-
-            if (currentUser && currentUser.username === uname && currentUser.passwordHash === passHash) {
-                localStorage.removeItem('logged_user');
-                currentUser = null;
-                checkAuthStatus();
-                alert("You have logged out successfully.");
-                showView('home-view');
-            } else {
-                alert("Credentials verification failed!");
-            }
-        }
-
-        function sendEmail(e) {
-            e.preventDefault();
-            const msg = document.getElementById('contact-msg').value;
-            window.location.href = `mailto:daniyalahmed5941@gmail.com?subject=Inquiry from World Currency Converter&body=${encodeURIComponent(msg)}`;
-        }
-
-        // ⭐ PWA: register service worker (enables "Add to Home Screen" / offline app shell)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed:', err));
-            });
-        }
-
-        // On Load Init
-        window.addEventListener('DOMContentLoaded', () => {
-            buildDropdownLists();
-            checkAuthStatus();
-            fetchPreciousMetals();
-            fetchCryptoPrices();
-            renderCurrencyChart();
-            setUnitCategory('length');
-            calculateEMI();
-            calculateTax();
-            loadForexNews();
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // 4. Placeholder Currency Model
+        const currencyGeometry = new THREE.IcosahedronGeometry(1, 0);
+        const currencyMaterial = new THREE.MeshStandardMaterial({
+            color: 0x818cf8,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.7
         });
+        const currencyModel = new THREE.Mesh(currencyGeometry, currencyMaterial);
+        currencyModel.position.set(2, 0, -2);
+        scene.add(currencyModel);
+
+        // 5. Interaction Variables
+        let mouseX = 0;
+        let mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+        let currentScroll = 0;
+
+        camera.position.z = 5;
+
+        // 6. Event Listeners
+        window.addEventListener('resize', () => {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - windowHalfX);
+            mouseY = (event.clientY - windowHalfY);
+        });
+
+        window.addEventListener('scroll', () => {
+            currentScroll = window.pageYOffset;
+        });
+
+        // 7. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            particlesMesh.rotation.y += mouseX * 0.00002;
+            particlesMesh.rotation.x += mouseY * 0.00002;
+
+            const time = Date.now() * 0.001;
+            currencyModel.rotation.y += 0.005;
+            currencyModel.rotation.x = time * 0.2;
+            
+            const targetY = -currentScroll * 0.002;
+            currencyModel.position.y += (targetY - currencyModel.position.y) * 0.05;
+
+            particlesMesh.rotation.z = currentScroll * 0.0002;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
     </script>
+
 </body>
 </html>
