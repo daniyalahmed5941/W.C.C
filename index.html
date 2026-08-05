@@ -13,18 +13,19 @@
 
     <title>World Currency & Financial Suite | Live Exchange Rates, Metals, Crypto & Calculators</title>
     
-    <!-- Google Fonts, FontAwesome & Chart.js -->
+    <!-- Google Fonts, FontAwesome, Chart.js & Three.js -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <link rel="icon" type="image/jpg" href="logo%20image.jpg">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <link rel="canonical" href="https://yourdomain.com/">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <style>
     :root {
         /* Modern Gradient & Vibrant Color Palette */
@@ -390,7 +391,7 @@
         letter-spacing: 0.5px;
     }
 
-    .input-group input, .input-group select {
+    .input-group input, .input-group select, .input-group textarea {
         width: 100%;
         padding: 14px 16px;
         background: var(--input-bg);
@@ -402,7 +403,7 @@
         box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
     }
 
-    .input-group input:focus, .input-group select:focus {
+    .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 15px var(--accent-glow);
     }
@@ -435,6 +436,10 @@
         font-weight: 700;
         color: var(--text-primary);
         flex: 1;
+    }
+
+    .currency-select-wrapper {
+        position: relative;
     }
 
     .dropdown-menu {
@@ -631,9 +636,6 @@
         background: rgba(255, 255, 255, 0.04);
     }
 
-    .badge-green { color: #10b981; font-weight: 700; }
-    .badge-red { color: #ef4444; font-weight: 700; }
-
     /* AI Assistant Chat */
     .chat-box {
         height: 300px;
@@ -684,35 +686,6 @@
         margin-top: 20px;
     }
 
-    .news-card {
-        background: var(--input-bg);
-        border: 1px solid var(--input-border);
-        padding: 20px;
-        border-radius: 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: transform 0.3s ease;
-    }
-
-    .news-card:hover {
-        transform: translateY(-4px);
-        border-color: var(--accent-color);
-    }
-
-    .news-card h4 {
-        font-size: 16px;
-        margin-bottom: 10px;
-        color: var(--text-primary);
-    }
-
-    .news-card p {
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-bottom: 16px;
-        line-height: 1.5;
-    }
-
     .seo-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -734,6 +707,21 @@
         border-color: var(--accent-color);
         transform: scale(1.04);
         box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Contact Details */
+    .info-detail {
+        margin-bottom: 10px;
+        font-size: 15px;
+        color: var(--text-primary);
+    }
+
+    /* Page Views Control */
+    .page-view {
+        display: none;
+    }
+    .page-view.active {
+        display: block;
     }
 
     /* Footer styling */
@@ -841,7 +829,7 @@
     <header id="main-header">
         <a class="logo" onclick="scrollToSection('hero-sec')">
             <i class="fa-solid fa-coins"></i>
-        <span>World Currency</span>
+            <span>World Currency</span>
         </a>
 
         <nav id="nav-menu">
@@ -874,7 +862,7 @@
             <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle Theme" aria-label="Toggle dark or light theme">
                 <i class="fa-solid fa-moon"></i>
             </button>
-            <div class="hamburger" onclick="toggleMobileMenu()" role="button" tabindex="0" aria-label="Open menu" onkeypress="if(event.key==='Enter') toggleMobileMenu()">
+            <div class="hamburger" onclick="toggleMobileMenu()" role="button" tabindex="0" aria-label="Open menu">
                 <i class="fa-solid fa-bars" id="menu-icon"></i>
             </div>
         </div>
@@ -941,7 +929,7 @@
                     <div class="converter-grid">
                         <!-- From Currency -->
                         <div class="input-group">
-                      <label>From</label>
+                            <label>From</label>
                             <div class="currency-select-wrapper">
                                 <div class="currency-select-box" onclick="toggleDropdown('from-dropdown')">
                                     <img id="from-flag" src="https://flagcdn.com/w40/eu.png" alt="flag">
@@ -986,7 +974,7 @@
                     </div>
                 </div>
 
-                <!-- 2. ⭐ Gold & Silver Price -->
+                <!-- 2. Gold & Silver Price -->
                 <div id="metals-sec" class="card glass">
                     <h2><i class="fa-solid fa-ring" style="color:var(--gold-color);"></i> Gold & Silver Live Rates</h2>
                     <p style="color: var(--text-secondary); font-size:14px; margin-bottom:15px;">Live bullion prices updated per Ounce, Tola (11.66g), and Gram in your selected currency.</p>
@@ -1027,7 +1015,7 @@
                     </div>
                 </div>
 
-                <!-- 3. ⭐ Crypto Price Tracker -->
+                <!-- 3. Crypto Price Tracker -->
                 <div id="crypto-sec" class="card glass">
                     <h2><i class="fa-brands fa-bitcoin" style="color:var(--crypto-color);"></i> Crypto Price Tracker</h2>
                     <p style="color: var(--text-secondary); font-size:14px; margin-bottom:10px;">Top cryptocurrencies real-time prices & 24h market trends.</p>
@@ -1049,7 +1037,7 @@
                     </div>
                 </div>
 
-                <!-- 4. ⭐ Exchange Rate History + Charts -->
+                <!-- 4. Exchange Rate History + Charts -->
                 <div id="chart-sec" class="card glass">
                     <h2><i class="fa-solid fa-chart-line"></i> Exchange Rate History & Charts</h2>
                     <p style="color: var(--text-secondary); font-size:14px; margin-bottom:15px;">Analyze exchange rate fluctuation trends over historical timelines.</p>
@@ -1081,7 +1069,7 @@
                     </div>
                 </div>
 
-                <!-- 5. ⭐ Unit Converter -->
+                <!-- 5. Unit Converter -->
                 <div id="unit-sec" class="card glass">
                     <h2><i class="fa-solid fa-ruler-combined"></i> Universal Unit Converter</h2>
                     
@@ -1106,7 +1094,7 @@
                     </div>
                 </div>
 
-                <!-- 6. ⭐ Loan EMI Calculator -->
+                <!-- 6. Loan EMI Calculator -->
                 <div id="emi-sec" class="card glass">
                     <h2><i class="fa-solid fa-building-columns"></i> Loan EMI Calculator</h2>
                     <p style="color: var(--text-secondary); font-size:14px; margin-bottom:15px;">Calculate monthly loan payments, interest payable, and total payback.</p>
@@ -1144,7 +1132,7 @@
                     </div>
                 </div>
 
-                <!-- 7. ⭐ Tax Calculator -->
+                <!-- 7. Tax Calculator -->
                 <div id="tax-sec" class="card glass">
                     <h2><i class="fa-solid fa-receipt"></i> Income Tax Calculator</h2>
                     <p style="color: var(--text-secondary); font-size:14px; margin-bottom:15px;">Calculate estimated tax slabs, monthly deduction, and take-home salary.</p>
@@ -1181,7 +1169,7 @@
                     </div>
                 </div>
 
-                <!-- 8. ⭐ AI Currency Assistant -->
+                <!-- 8. AI Currency Assistant -->
                 <div id="ai-sec" class="card glass">
                     <h2><i class="fa-solid fa-robot" style="color:var(--accent-color);"></i> AI Currency Assistant</h2>
                     <p style="color: var(--text-secondary); font-size:14px; margin-bottom:12px;">Ask questions regarding global rates, conversion tips, market trends, or tax rules.</p>
@@ -1198,7 +1186,7 @@
                     </div>
                 </div>
 
-                <!-- 9. ⭐ Forex News -->
+                <!-- 9. Forex News -->
                 <div id="news-sec" class="card glass">
                     <h2><i class="fa-solid fa-newspaper"></i> Forex & Financial News</h2>
                     <p style="color: var(--text-secondary); font-size:14px;">Stay updated with real-time headlines across central banks and exchange markets.</p>
@@ -1208,7 +1196,7 @@
                     </div>
                 </div>
 
-                <!-- 10. ⭐ SEO Quick Hub Pages -->
+                <!-- 10. SEO Quick Hub Pages -->
                 <div id="seo-sec" class="card glass">
                     <h2><i class="fa-solid fa-globe"></i> Popular Conversion Pages</h2>
                     <p style="color: var(--text-secondary); font-size:14px;">Instant lookup shortcuts for top searched exchange pairs.</p>
@@ -1244,8 +1232,8 @@
                 <!-- Contact Section -->
                 <div id="contact-sec" class="card glass">
                     <h2><i class="fa-solid fa-envelope"></i> Contact Support</h2>
-                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Developer:</strong> Daniyal Ahmed</div>
-                    <div class="info-detail"><i class="fa-solid fa-paper-plane"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com</div>
+                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Developer:</strong> Daniyal Ahmed[cite: 1]</div>
+                    <div class="info-detail"><i class="fa-solid fa-paper-plane"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com[cite: 1]</div>
                     
                     <form onsubmit="sendEmail(event)" style="margin-top: 15px;">
                         <div class="input-group">
@@ -1306,11 +1294,11 @@
                     <form onsubmit="handleSignup(event)">
                         <div class="input-group" style="margin-bottom: 12px;">
                             <label>Full Name</label>
-                            <input type="text" id="signup-fullname" required placeholder="Daniyal Ahmed">
+                            <input type="text" id="signup-fullname" required placeholder="Daniyal Ahmed">[cite: 1]
                         </div>
                         <div class="input-group" style="margin-bottom: 12px;">
                             <label>Email Address</label>
-                            <input type="email" id="signup-email" required placeholder="daniyalahmed5941@gmail.com">
+                            <input type="email" id="signup-email" required placeholder="daniyalahmed5941@gmail.com">[cite: 1]
                         </div>
                         <div class="input-group" style="margin-bottom: 12px;">
                             <label>Username</label>
@@ -1368,16 +1356,16 @@
                 <h4>Quick Navigation</h4>
                 <ul>
                    <li><a onclick="scrollToSection('hero-sec')">Home</a></li>
-                  <li><a onclick="scrollToSection('converter-sec')">Converter</a></li>
-                  <li><a onclick="scrollToSection('metals-sec')">Gold & Silver</a></li>
+                   <li><a onclick="scrollToSection('converter-sec')">Converter</a></li>
+                   <li><a onclick="scrollToSection('metals-sec')">Gold & Silver</a></li>
                    <li><a onclick="scrollToSection('crypto-sec')">Crypto Tracker</a></li>
                    <li><a onclick="scrollToSection('contact-sec')">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
                 <h4>Developer Contact</h4>
-                <p style="font-size: 13px; margin-bottom: 8px;"><i class="fa-solid fa-user"></i> Daniyal Ahmed</p>
-                <p style="font-size: 13px;"><i class="fa-solid fa-envelope"></i> daniyalahmed5941@gmail.com</p>
+                <p style="font-size: 13px; margin-bottom: 8px;"><i class="fa-solid fa-user"></i> Daniyal Ahmed</p>[cite: 1]
+                <p style="font-size: 13px;"><i class="fa-solid fa-envelope"></i> daniyalahmed5941@gmail.com</p>[cite: 1]
             </div>
         </div>
         <div class="footer-bottom">
@@ -1385,9 +1373,6 @@
         </div>
     </footer>
 
-    <!-- Three.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
     <!-- JavaScript Link -->
     <script src="script.js"></script>
 
@@ -1408,10 +1393,8 @@
         renderer.domElement.style.width = '100vw';
         renderer.domElement.style.height = '100vh';
         renderer.domElement.style.zIndex = '-1';
-        container.prepend(renderer.domElement);
         renderer.domElement.style.pointerEvents = 'none';
-
-container.prepend(renderer.domElement);
+        container.prepend(renderer.domElement);
 
         // 2. Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
