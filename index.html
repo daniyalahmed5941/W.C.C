@@ -13,13 +13,12 @@
 
     <title>World Currency & Financial Suite | Live Exchange Rates, Metals, Crypto & Calculators</title>
     
-    <!-- Google Fonts, FontAwesome, Chart.js & Three.js -->
+    <!-- Google Fonts, FontAwesome & Chart.js -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <link rel="icon" type="image/jpg" href="logo%20image.jpg">
     <link rel="manifest" href="manifest.json">
@@ -1232,8 +1231,8 @@
                 <!-- Contact Section -->
                 <div id="contact-sec" class="card glass">
                     <h2><i class="fa-solid fa-envelope"></i> Contact Support</h2>
-                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Developer:</strong> Daniyal Ahmed[cite: 1]</div>
-                    <div class="info-detail"><i class="fa-solid fa-paper-plane"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com[cite: 1]</div>
+                    <div class="info-detail"><i class="fa-solid fa-user"></i> <strong>Developer:</strong> Daniyal Ahmed</div>
+                    <div class="info-detail"><i class="fa-solid fa-paper-plane"></i> <strong>Email:</strong> daniyalahmed5941@gmail.com</div>
                     
                     <form onsubmit="sendEmail(event)" style="margin-top: 15px;">
                         <div class="input-group">
@@ -1294,11 +1293,11 @@
                     <form onsubmit="handleSignup(event)">
                         <div class="input-group" style="margin-bottom: 12px;">
                             <label>Full Name</label>
-                            <input type="text" id="signup-fullname" required placeholder="Daniyal Ahmed">[cite: 1]
+                            <input type="text" id="signup-fullname" required placeholder="Daniyal Ahmed">
                         </div>
                         <div class="input-group" style="margin-bottom: 12px;">
                             <label>Email Address</label>
-                            <input type="email" id="signup-email" required placeholder="daniyalahmed5941@gmail.com">[cite: 1]
+                            <input type="email" id="signup-email" required placeholder="daniyalahmed5941@gmail.com">
                         </div>
                         <div class="input-group" style="margin-bottom: 12px;">
                             <label>Username</label>
@@ -1364,8 +1363,8 @@
             </div>
             <div class="footer-contact">
                 <h4>Developer Contact</h4>
-                <p style="font-size: 13px; margin-bottom: 8px;"><i class="fa-solid fa-user"></i> Daniyal Ahmed</p>[cite: 1]
-                <p style="font-size: 13px;"><i class="fa-solid fa-envelope"></i> daniyalahmed5941@gmail.com</p>[cite: 1]
+                <p style="font-size: 13px; margin-bottom: 8px;"><i class="fa-solid fa-user"></i> Daniyal Ahmed</p>
+                <p style="font-size: 13px;"><i class="fa-solid fa-envelope"></i> daniyalahmed5941@gmail.com</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1375,116 +1374,6 @@
 
     <!-- JavaScript Link -->
     <script src="script.js"></script>
-
-    <!-- 3D Animation Code -->
-    <script>
-        // 1. Scene Setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        const container = document.body;
-        renderer.domElement.style.position = 'fixed';
-        renderer.domElement.style.top = '0';
-        renderer.domElement.style.left = '0';
-        renderer.domElement.style.width = '100vw';
-        renderer.domElement.style.height = '100vh';
-        renderer.domElement.style.zIndex = '-1';
-        renderer.domElement.style.pointerEvents = 'none';
-        container.prepend(renderer.domElement);
-
-        // 2. Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(5, 5, 5);
-        scene.add(directionalLight);
-
-        // 3. Interactive Particle Background
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 2000;
-        const posArray = new Float32Array(particlesCount * 3);
-
-        for (let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 10;
-        }
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.005,
-            color: 0x38bdf8,
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
-        });
-
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-
-        // 4. Placeholder Currency Model
-        const currencyGeometry = new THREE.IcosahedronGeometry(1, 0);
-        const currencyMaterial = new THREE.MeshStandardMaterial({
-            color: 0x818cf8,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.7
-        });
-        const currencyModel = new THREE.Mesh(currencyGeometry, currencyMaterial);
-        currencyModel.position.set(2, 0, -2);
-        scene.add(currencyModel);
-
-        // 5. Interaction Variables
-        let mouseX = 0;
-        let mouseY = 0;
-        let windowHalfX = window.innerWidth / 2;
-        let windowHalfY = window.innerHeight / 2;
-        let currentScroll = 0;
-
-        camera.position.z = 5;
-
-        // 6. Event Listeners
-        window.addEventListener('resize', () => {
-            windowHalfX = window.innerWidth / 2;
-            windowHalfY = window.innerHeight / 2;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX - windowHalfX);
-            mouseY = (event.clientY - windowHalfY);
-        });
-
-        window.addEventListener('scroll', () => {
-            currentScroll = window.pageYOffset;
-        });
-
-        // 7. Animation Loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            particlesMesh.rotation.y += mouseX * 0.00002;
-            particlesMesh.rotation.x += mouseY * 0.00002;
-
-            const time = Date.now() * 0.001;
-            currencyModel.rotation.y += 0.005;
-            currencyModel.rotation.x = time * 0.2;
-            
-            const targetY = -currentScroll * 0.002;
-            currencyModel.position.y += (targetY - currencyModel.position.y) * 0.05;
-
-            particlesMesh.rotation.z = currentScroll * 0.0002;
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-    </script>
 
 </body>
 </html>
